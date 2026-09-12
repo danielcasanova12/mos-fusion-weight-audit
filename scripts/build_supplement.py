@@ -119,7 +119,7 @@ def main() -> None:
         save_text_page(pdf, "Reproducibility supplement", [
             TITLE, AUTHORS,
             f"Artifact version: {VERSION}. The release tag resolves the immutable Git commit. Zenodo DOI: pending release publication; no placeholder DOI is asserted.",
-            "This document accompanies the machine-readable CSVs and executable analysis modules. It reports all 40 attribution cells, all 16 discordant cells with uncertainty and refit frequency, all 120 Rashomon coordinate intervals, system-disjoint selection by corpus and budget, and the null controls. Values are copied from the canonical committed CSVs; scripts/build_public_tables.py produces text equivalents.",
+            "This document accompanies the machine-readable CSVs and executable analysis modules. It reports all 40 attribution cells, all 16 discordant cells with uncertainty and refit frequency, all 120 Rashomon coordinate intervals, system-disjoint selection by corpus and budget, and the null controls. Values are copied from the canonical committed CSVs; scripts/build_public_tables.py produces platform-stable text equivalents.",
             "Data and pretrained checkpoints are not redistributed. See metadata/dataset_splits.md and metadata/checkpoints.md for sources, versions, licenses, and preprocessing instructions. The public artifact begins from already extracted representations.",
             "Integrity command: python scripts/verify_release.py. It checks SHA-256 hashes, schemas, cross-file keys, four corpora, 40 attribution cells, all 1,023 masks in every released lattice, 50 training refits per cell, Rashomon solver success, nested folds, null families, table generation, and a synthetic end-to-end smoke test.",
         ])

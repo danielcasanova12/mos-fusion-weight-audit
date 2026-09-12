@@ -24,9 +24,15 @@ def main() -> None:
         if not path.is_file() or path in {OUTPUT, SHA_OUTPUT}:
             continue
         normalized = Path(rel).as_posix()
+        # Hash the canonical staged blob, not the platform-specific working-tree
+        # bytes. This keeps manifests valid after Git's LF normalization.
+        blob = subprocess.run(
+            ["git", "show", f":{normalized}"], cwd=ROOT, check=True,
+            capture_output=True,
+        ).stdout
         files[normalized] = {
-            "bytes": path.stat().st_size,
-            "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            "bytes": len(blob),
+            "sha256": hashlib.sha256(blob).hexdigest(),
         }
     payload = {
         "artifact_version": "v1.0-icassp2027-submission",

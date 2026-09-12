@@ -80,16 +80,23 @@ The two commands above require only committed files. Verification checks file
 hashes, schemas, cross-file keys, 40 cells, every 1,023-mask lattice, all 50
 refits per cell, Rashomon convergence, nested folds, null families, regenerated
 public tables, and a synthetic end-to-end run of the modular code. The PDF build
-regenerates the complete supplement deterministically.
+regenerates the complete supplement. PDF bytes can differ across platforms due
+to font/backend metadata; the canonical numeric CSVs and generated text tables
+are the reproducibility targets.
 
 For a release-maintainer rebuild after intentional edits:
 
 ```bash
 python scripts/build_public_tables.py
 python scripts/build_supplement.py
+git add -A
 python scripts/build_manifest.py
 python scripts/verify_release.py
 ```
+
+`build_manifest.py` hashes the canonical staged Git blobs, so intentional edits
+must be staged before the manifest is rebuilt. The manifest files themselves
+are excluded to avoid a recursive hash.
 
 ## Full recomputation from embeddings
 

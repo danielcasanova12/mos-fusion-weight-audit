@@ -201,10 +201,14 @@ def validate_manifest() -> None:
         digest, rel = line.split("  ", 1)
         sha_map[rel] = digest
     require(set(sha_map) == set(manifest["files"]), "JSON and SHA-256 manifests list different files")
+    binary_suffixes = {".pdf", ".png", ".jpg", ".jpeg", ".tgz", ".zip"}
     for rel, expected in manifest["files"].items():
         target = ROOT / rel
         require(target.is_file(), f"missing manifest file: {rel}")
-        digest = hashlib.sha256(target.read_bytes()).hexdigest()
+        content = target.read_bytes()
+        if target.suffix.lower() not in binary_suffixes:
+            content = content.replace(b"\r\n", b"\n")
+        digest = hashlib.sha256(content).hexdigest()
         require(digest == expected["sha256"], f"hash mismatch: {rel}")
         require(digest == sha_map[rel], f"text manifest mismatch: {rel}")
 
