@@ -7,6 +7,11 @@ the claim-organized supplementary PDF cited by the paper. Audio, listener-level
 ratings, cached embeddings, credentials, and third-party checkpoint binaries
 are not redistributed.
 
+Authors: Daniel Casanova, Alef Iury Ferreira, Lucas Gris, Pedro Lustosa Rege
+Botelho, Fernanda Silva, Frederico Oliveira, Arlindo Galvão Filho, and Anderson
+da Silva Soares. Affiliations are AKCIT, Brazil; Federal University of Goiás
+(UFG), Brazil; and Federal University of Technology – Paraná (UTFPR), Brazil.
+
 ## Contents
 
 ```text

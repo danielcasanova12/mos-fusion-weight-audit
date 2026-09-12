@@ -5,18 +5,28 @@ type: software
 authors:
   - family-names: Casanova
     given-names: Daniel
+    affiliation: "AKCIT, Brazil; Federal University of Technology – Paraná (UTFPR), Brazil"
   - family-names: Ferreira
     given-names: Alef Iury
-  - family-names: Casanova
-    given-names: Edresson
+    affiliation: "AKCIT, Brazil; Federal University of Goiás (UFG), Brazil"
   - family-names: Gris
     given-names: Lucas
+    affiliation: "AKCIT, Brazil; Federal University of Goiás (UFG), Brazil"
   - family-names: Botelho
     given-names: Pedro Lustosa Rege
+    affiliation: "AKCIT, Brazil"
   - family-names: Silva
     given-names: Fernanda
+    affiliation: "AKCIT, Brazil"
+  - family-names: Oliveira
+    given-names: Frederico
+    affiliation: "AKCIT, Brazil; Federal University of Goiás (UFG), Brazil"
+  - family-names: Galvão Filho
+    given-names: Arlindo
+    affiliation: "AKCIT, Brazil; Federal University of Goiás (UFG), Brazil"
   - family-names: Soares
     given-names: Anderson da Silva
+    affiliation: "AKCIT, Brazil; Federal University of Goiás (UFG), Brazil"
 repository-code: "https://github.com/danielcasanova12/mos-fusion-weight-audit"
 version: "1.0.0"
 # Add date-released and doi only after the immutable GitHub Release is published.
