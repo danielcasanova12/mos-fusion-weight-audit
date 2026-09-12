@@ -14,6 +14,11 @@ OUT = ROOT / "supplement"
 OUT.mkdir(exist_ok=True)
 
 
+def write_lf(path: Path, content: str) -> None:
+    with path.open("w", encoding="utf-8", newline="\n") as stream:
+        stream.write(content)
+
+
 def main() -> None:
     selection = pd.read_csv(RESULTS / "nested_selection_summary.csv")
     bootstrap = pd.read_csv(RESULTS / "nested_selection_bootstrap.csv")
@@ -46,8 +51,7 @@ def main() -> None:
             f"{int(row.wins)}/{int(row.comparisons)} " + r"\\"
         )
     latex.extend([r"\bottomrule", r"\end{tabular}"])
-    (OUT / "table_nested_selection.tex").write_text("\n".join(latex) + "\n",
-                                                     encoding="utf-8")
+    write_lf(OUT / "table_nested_selection.tex", "\n".join(latex) + "\n")
 
     md = [
         "# Generated public tables",
@@ -78,7 +82,7 @@ def main() -> None:
         players.to_markdown(index=False, floatfmt=".6f"),
         "",
     ])
-    (OUT / "generated_tables.md").write_text("\n".join(md), encoding="utf-8")
+    write_lf(OUT / "generated_tables.md", "\n".join(md))
 
     full = [
         "# Complete generated tables",
@@ -102,7 +106,7 @@ def main() -> None:
         nulls.to_markdown(index=False, floatfmt=".6g"),
         "",
     ]
-    (OUT / "generated_full_tables.md").write_text("\n".join(full), encoding="utf-8")
+    write_lf(OUT / "generated_full_tables.md", "\n".join(full))
     print("wrote compact and complete generated tables")
 
 

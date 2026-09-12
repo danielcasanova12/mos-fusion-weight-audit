@@ -183,12 +183,12 @@
       "sha256": "318c209a6dbaa7d437d969cfd0f40824f1d4a54c70e750b864aea5346c63f9fc"
     },
     "scripts/build_manifest.py": {
-      "bytes": 1624,
-      "sha256": "abee73a9c1035ed7be6147f33aa78daff004678ccaf9c71b56d242a6e4e2a6d4"
+      "bytes": 1724,
+      "sha256": "2645193d2db397c2013f19fc48431e466be62ff5ae9385dafafd8ce2d131236a"
     },
     "scripts/build_public_tables.py": {
-      "bytes": 3693,
-      "sha256": "58a3e0cf0be8d629bacb07f1a379074363e49414e13e4850c8498c6d75336510"
+      "bytes": 3724,
+      "sha256": "0a77b5f28676ab640642e059fedd68fbb1e5986fbb6fa2577726dc1f8af8c185"
     },
     "scripts/build_supplement.py": {
       "bytes": 13130,

@@ -39,9 +39,11 @@ def main() -> None:
         "hash_algorithm": "sha256",
         "files": files,
     }
-    OUTPUT.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    with OUTPUT.open("w", encoding="utf-8", newline="\n") as stream:
+        stream.write(json.dumps(payload, indent=2) + "\n")
     lines = [f"{entry['sha256']}  {rel}" for rel, entry in files.items()]
-    SHA_OUTPUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    with SHA_OUTPUT.open("w", encoding="utf-8", newline="\n") as stream:
+        stream.write("\n".join(lines) + "\n")
     print(f"wrote JSON and SHA-256 manifests for {len(files)} tracked files")
 
 
