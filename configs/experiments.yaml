@@ -13,7 +13,8 @@ primary_protocol:
 uncertainty:
   resampling_unit: system_id
   test_bootstrap_replicates: 10000
-  training_refits: 50
+  full_gate_training_system_refits: 100
+  complete_game_shapley_refits: 50
   confidence_level: 0.95
 rashomon:
   relative_mse_tolerances: [0.001, 0.005, 0.01]

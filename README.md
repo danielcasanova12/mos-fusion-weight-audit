@@ -41,6 +41,7 @@ mos-fusion-audit/
     ├── table_1.csv
     ├── table_2.csv
     └── supplementary_tables/
+        └── file_manifest.csv
 ```
 
 The two numbered tables reproduce the paper's main tabular evidence. The
@@ -76,12 +77,30 @@ column definitions, confidence-interval scopes, and the distinction between
 ## Data and checkpoints
 
 Datasets and pretrained models must be obtained from their original sources
-under their own licenses. `configs/representations.yaml` and
+under their own licenses:
+
+- **BRSpeechMOS:** use the original authors' acquisition/preparation repository,
+  <https://github.com/freds0/BSpeech-MOS-Prediction>, and follow its current terms.
+- **BVCC:** use the VoiceMOS Challenge 2022 record,
+  <https://doi.org/10.5281/zenodo.6572572>. Blizzard Challenge audio is not
+  redistributable; follow the upstream acquisition instructions.
+- **SingMOS:** use the VoiceMOS Challenge resource page,
+  <https://sites.google.com/view/voicemos-challenge/resources>, and the dataset
+  description at <https://arxiv.org/abs/2406.10911>.
+- **TMHINT-QI:** use the original corpus description at
+  <https://arxiv.org/abs/2111.02585> and the VoiceMOS resource page above.
+
+The current upstream terms control in every case; this artifact grants no data
+license. `configs/representations.yaml` and
 `checkpoints/README.md` specify the model/layer identifiers and feature
 definitions used for extraction. No checkpoint weight file is included; the
 checksum file authenticates the canonical identifier lines rather than model
 weights. Bit-identical re-extraction from mutable upstream registries is not
 claimed.
+
+`tables/supplementary_tables/file_manifest.csv` lists path, byte count, and
+SHA-256 for every release file except the manifest itself. It is regenerated
+only after the release contents are frozen.
 
 ## Environment
 
@@ -92,6 +111,6 @@ part of this public snapshot.
 
 ## Citation and release
 
-Please cite the paper and the immutable release tag
-`v1.0-icassp2027-submission`. The Zenodo DOI is intentionally omitted until a
-GitHub Release has been archived; do not cite a placeholder DOI.
+Please cite the paper and archived release at
+<https://doi.org/10.5281/zenodo.22729723> (published 2026-09-12). The archived
+tag is `v1.0-icassp2027-submission`.

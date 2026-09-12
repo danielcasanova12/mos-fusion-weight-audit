@@ -29,7 +29,9 @@ authors:
     affiliation: "AKCIT, Brazil; Federal University of Goiás (UFG), Brazil"
 repository-code: "https://github.com/danielcasanova12/mos-fusion-weight-audit"
 version: "1.0.0"
-# Add date-released and doi only after the immutable GitHub Release is published.
+date-released: 2026-09-12
+doi: 10.5281/zenodo.22729723
+url: "https://doi.org/10.5281/zenodo.22729723"
 license: MIT
 keywords:
   - mean opinion score

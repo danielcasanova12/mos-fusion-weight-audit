@@ -2,10 +2,13 @@ name: mos-fusion-audit
 channels:
   - conda-forge
 dependencies:
-  - python=3.12
+  - python=3.10.12
   - numpy=2.2.6
   - pandas=2.3.3
   - scipy=1.15.3
+  - scikit-learn=1.7.2
   - pyyaml=6.0.2
   - matplotlib=3.10.6
   - pip
+  # The recorded fitting environment used torch 2.5.1+cu118. It is omitted
+  # here because the frozen CSV/PDF audit does not execute neural encoders.

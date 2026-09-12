@@ -1,39 +1,67 @@
 representations:
   - id: whisper
     family: SSL_speech
-    model: Whisper-large-v3
+    checkpoint: openai/whisper-large-v3
+    revision: not_recorded
     layer: last_hidden
+    pooling: mean_over_frames
+    dimensions: 1280
   - id: contentvec12
     family: SSL_content
-    model: ContentVec
+    checkpoint: lengyue233/content-vec-best
+    revision: not_recorded
     layer: 12
+    pooling: mean_over_frames
+    dimensions: 768
   - id: wavlm
     family: SSL_speech
-    model: WavLM-base-plus
+    checkpoint: microsoft/wavlm-base-plus
+    revision: not_recorded
     layer: 12
+    pooling: mean_over_frames
+    dimensions: 768
   - id: beats
     family: SSL_audio
-    model: BEATs_iter3_plus
+    checkpoint_repository: Bencr/beats-checkpoints
+    checkpoint_file: BEATs_iter3_plus_AS2M.pt
+    revision: not_recorded
+    layer: final_hidden
+    pooling: mean_over_frames
+    dimensions: 768
   - id: auditory_erb
     family: handcrafted_spectral
     dimensions: 64
   - id: speaker
     family: speaker_identity
-    model: ECAPA-TDNN
+    checkpoint: speechbrain/spkrec-ecapa-voxceleb
+    revision: not_recorded
+    pooling: checkpoint_embedding
+    normalization: l2
+    dimensions: 192
   - id: rmvpe_cont
     family: pitch
     source: RMVPE
+    revision: not_recorded
     summary: [voiced_mean, voiced_std, voiced_min, voiced_max, voiced_fraction]
+    dimensions: 5
   - id: rmvpe_quant
     family: pitch
     source: RMVPE
+    revision: not_recorded
     summary: 256_bin_normalized_histogram
+    dimensions: 256
   - id: ced
     family: SSL_audio
-    model: CED-Small
+    checkpoint: mispeech/ced-small
+    revision: not_recorded
+    layer: final_encoder_state
+    pooling: mean_over_frames
+    dimensions: 384
   - id: egemaps
     family: handcrafted_acoustic
-    model: eGeMAPSv02_functionals
+    feature_set: eGeMAPSv02
+    level: functionals
+    dimensions: 88
     winsorization_percentiles: [0.1, 99.9]
 
 cache_contract:
@@ -41,3 +69,7 @@ cache_contract:
   rows: utterance_ids_in_split_manifest_order
   learned_preprocessing: forbidden_at_extraction_stage
   redistribution: not_included
+
+reproducibility_limit:
+  checkpoint_revisions_and_weight_hashes: not_recorded_at_extraction
+  consequence: exact_bitwise_reextraction_not_claimed
