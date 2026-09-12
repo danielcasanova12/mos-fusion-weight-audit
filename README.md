@@ -31,11 +31,19 @@ a causal interpretation of speech representations.
 
 | Location | Purpose |
 |---|---|
-| `configs/experiment.yaml` | Frozen protocol, features, budgets, seeds, and metrics |
-| `src/` | Analysis and nested system-disjoint experiment snapshot |
+| `configs/datasets.yaml` | Corpus roles, grouped-split contract, and redistribution status |
+| `configs/representations.yaml` | Ten player definitions and feature-cache contract |
+| `configs/experiments.yaml` | Frozen primary, uncertainty, Rashomon, null, and nested protocols |
+| `src/experts.py` | Fold-local winsorization/normalization and grouped ridge OOF predictions |
+| `src/fusion.py`, `src/coalitions.py` | Deterministic simplex gates and exhaustive coalition evaluation |
+| `src/shapley.py`, `src/interactions.py` | Exact attribution, grouped players, and pairwise interactions |
+| `src/rashomon.py`, `src/bootstrap.py` | Near-optimal weight ranges and system bootstrap helpers |
+| `src/nested_selection.py` | Budgeted ranking and inner-validation subset-choice primitives |
+| `src/run_*.py` | Archived full-run drivers for licensed feature caches |
 | `scripts/verify_release.py` | Integrity, schema, and headline-number checks |
 | `scripts/build_public_tables.py` | Rebuilds the public Markdown/LaTeX tables |
-| `scripts/build_supplement.py` | Rebuilds the short claim-organized supplement PDF |
+| `scripts/build_supplement.py` | Rebuilds the complete claim-organized supplement PDF |
+| `scripts/smoke_pipeline.py` | Synthetic expert→OOF→gate→coalition→attribution smoke test |
 | `results/` | Aggregate coalition, attribution, bootstrap, and selection outputs |
 | `supplement/` | Human-readable supplement and generated tables |
 | `metadata/` | Seeds, checkpoints, dataset provenance, and file hashes |
@@ -45,14 +53,18 @@ a causal interpretation of speech representations.
 
 | Paper statement | Public evidence | Reproduction command |
 |---|---|---|
-| 16 zero-gate/positive-Shapley cells | `results/zero_gate_positive_shapley_cases.csv`, `results/attribution_40cells.csv` | `python scripts/verify_release.py` |
+| Complete 40-cell attribution table | `results/all_40_cells.csv`, `results/attribution_40cells.csv` | `python scripts/verify_release.py` |
+| 16 zero-gate/positive-Shapley cells with intervals/refit frequency | `results/discordant_cases.csv`, `results/shapley_values.csv` | `python scripts/verify_release.py` |
 | Player granularity changes 16 to 7–13 | `results/player_partition_summary.csv` | `python scripts/build_public_tables.py` |
-| Rashomon weight ranges | `results/rashomon_weight_ranges.csv` | `python scripts/build_public_tables.py` |
-| Fixed-coalition system contrasts | `results/system_level_contrasts.csv` | `python scripts/build_public_tables.py` |
+| All 120 Rashomon weight intervals and KKT audit | `results/rashomon_intervals.csv`, `results/rashomon_kkt_audit.csv` | `python scripts/verify_release.py` |
+| 50 system refits for every corpus/expert cell | `results/training_refits.csv`, `results/training_gate_refit_summary.csv` | `python scripts/verify_release.py` |
+| Fixed-coalition system contrasts | `results/fixed_coalition_contrasts.csv` | `python scripts/build_public_tables.py` |
 | Complete common-alpha coalition lattice | `results/coalition_values.csv` | `python scripts/verify_release.py` |
+| Pairwise interactions and correlation uncertainty | `results/interaction_values.csv`, `results/interaction_bootstrap.csv` | `python scripts/verify_release.py` |
 | Nested selection table | `results/nested_selection_summary.csv` | `python scripts/build_public_tables.py` |
 | Nested bootstrap intervals and Holm tests | `results/nested_selection_bootstrap.csv` | `python scripts/verify_release.py` |
-| Outer-fold choices | `results/nested_selection_folds.csv` | `python scripts/verify_release.py` |
+| All outer-fold choices and corpus×budget metrics | `results/nested_selections.csv`, `results/nested_selection_metrics.csv` | `python scripts/verify_release.py` |
+| Four null/control families | `results/null_experiments.csv` | `python scripts/verify_release.py` |
 
 ## Quick start: reproduce public tables and supplement
 
@@ -61,22 +73,34 @@ python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
 python -m pip install -r requirements.txt
 python scripts/verify_release.py
+python scripts/build_supplement.py
+```
+
+The two commands above require only committed files. Verification checks file
+hashes, schemas, cross-file keys, 40 cells, every 1,023-mask lattice, all 50
+refits per cell, Rashomon convergence, nested folds, null families, regenerated
+public tables, and a synthetic end-to-end run of the modular code. The PDF build
+regenerates the complete supplement deterministically.
+
+For a release-maintainer rebuild after intentional edits:
+
+```bash
 python scripts/build_public_tables.py
 python scripts/build_supplement.py
 python scripts/build_manifest.py
+python scripts/verify_release.py
 ```
-
-The three commands above require only committed files. They validate the
-release, regenerate `supplement/generated_tables.md` and
-`supplement/table_nested_selection.tex`, and regenerate
-`supplement/supplementary_material.pdf`.
 
 ## Full recomputation from embeddings
 
-The full experiment cannot run from this repository alone because upstream
-speech and cached embeddings are not redistributable. After obtaining each
-dataset under its original terms and generating the ten feature caches in the
-layout documented by `configs/experiment.yaml`, run:
+The public modules cover the pipeline from already extracted representations to
+the published quantities: fold-local preprocessing, ridge experts, grouped OOF
+predictions, simplex gates, 1,023 coalitions, exact Shapley/interactions,
+Rashomon ranges, grouped bootstrap, nested system-disjoint selection, and table
+generation. The full experiment cannot run from this repository alone because
+upstream speech and cached embeddings are not redistributable. After obtaining
+each dataset under its original terms and generating the ten feature caches in
+the contract documented by `configs/representations.yaml`, run:
 
 ```bash
 python src/run_system_disjoint_selection.py \
@@ -87,10 +111,11 @@ python src/run_system_disjoint_selection.py \
   --bootstrap 10000 --seed 20260912
 ```
 
-The program is fold-resumable and writes progress, diagnostics, errors, fold
-choices, item predictions, and aggregate bootstrap results. The companion
-modules `src/run_missing_experiments.py` and
-`src/run_final_icasp_controls.py` provide the shared loaders and gate routines.
+The archived driver is fold-resumable and writes progress, diagnostics, errors,
+fold choices, item predictions, and aggregate bootstrap results. The companion
+drivers preserve the loaders used in the run; the small modules named in the
+repository map expose the scientifically central operations for inspection and
+testing without private data.
 
 ## Environment, seeds, and checkpoints
 
@@ -104,7 +129,7 @@ expert-fitting, scoring, subset-selection, and gate-calibration step.
 
 ## Data provenance and redistribution
 
-See `metadata/datasets.md`. Users must obtain BRSpeechMOS, BVCC, SingMOS, and
+See `metadata/datasets.md` and `metadata/dataset_splits.md`. Users must obtain BRSpeechMOS, BVCC, SingMOS, and
 TMHINT-QI from their original distributors and comply with the terms of every
 upstream component. In particular, the BVCC release notes that Blizzard
 Challenge samples may not be redistributed. This repository therefore contains
@@ -132,9 +157,17 @@ git rev-parse HEAD
 python scripts/verify_release.py
 ```
 
-Use the Zenodo DOI shown in `CITATION.cff` once the GitHub–Zenodo archive has
-been created. Until then, cite the tagged GitHub release rather than a moving
-branch. Do not insert a placeholder DOI into the manuscript.
+The GitHub Release and Zenodo DOI are deliberately not final until a clean-clone
+installation and verification pass. Once Zenodo has archived the final Release,
+add the real DOI and release date to `CITATION.cff` and the manuscript. Until
+then, do not cite a placeholder DOI or describe the branch as immutable.
+
+## Exclusions and security boundary
+
+Committed content must not include audio, listener-level ratings, access
+tokens, passwords, machine-specific absolute paths, third-party checkpoints,
+large embedding caches, temporary outputs, or runtime caches. The manifest
+hashes tracked release files only. Dataset and model licenses remain upstream.
 
 ## License
 

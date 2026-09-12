@@ -1,0 +1,43 @@
+representations:
+  - id: whisper
+    family: SSL_speech
+    model: Whisper-large-v3
+    layer: last_hidden
+  - id: contentvec12
+    family: SSL_content
+    model: ContentVec
+    layer: 12
+  - id: wavlm
+    family: SSL_speech
+    model: WavLM-base-plus
+    layer: 12
+  - id: beats
+    family: SSL_audio
+    model: BEATs_iter3_plus
+  - id: auditory_erb
+    family: handcrafted_spectral
+    dimensions: 64
+  - id: speaker
+    family: speaker_identity
+    model: ECAPA-TDNN
+  - id: rmvpe_cont
+    family: pitch
+    source: RMVPE
+    summary: [voiced_mean, voiced_std, voiced_min, voiced_max, voiced_fraction]
+  - id: rmvpe_quant
+    family: pitch
+    source: RMVPE
+    summary: 256_bin_normalized_histogram
+  - id: ced
+    family: SSL_audio
+    model: CED-Small
+  - id: egemaps
+    family: handcrafted_acoustic
+    model: eGeMAPSv02_functionals
+    winsorization_percentiles: [0.1, 99.9]
+
+cache_contract:
+  data_type: float32_or_float64_matrix
+  rows: utterance_ids_in_split_manifest_order
+  learned_preprocessing: forbidden_at_extraction_stage
+  redistribution: not_included

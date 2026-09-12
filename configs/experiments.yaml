@@ -1,0 +1,29 @@
+artifact_version: v1.0-icassp2027-submission
+primary_protocol:
+  expert: ridge
+  alpha: 10.0
+  transforms: training_fold_only
+  fusion: nonnegative_simplex_mse
+  fusion_input: grouped_oof_predictions
+  players: 10
+  coalition_masks: [1, 1023]
+  nonempty_coalitions_per_corpus: 1023
+  value_function: held_out_null_mse_minus_coalition_mse
+  attribution: exact_loss_based_shapley
+uncertainty:
+  resampling_unit: system_id
+  test_bootstrap_replicates: 10000
+  training_refits: 50
+  confidence_level: 0.95
+rashomon:
+  relative_mse_tolerances: [0.001, 0.005, 0.01]
+  coordinatewise_extrema: true
+nested_selection:
+  methods: [gate, singleton, shapley, inner_search]
+  budgets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  primary_budgets: [1, 2, 3, 5]
+  scoring: equal_system_mse
+  bootstrap_replicates: 10000
+  multiplicity: Holm_across_five_macro_contrasts
+nulls:
+  families: [permuted_redundancy, covariance_matched_gaussian, residual_controls, full_pipeline]

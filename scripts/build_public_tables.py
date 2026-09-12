@@ -19,6 +19,10 @@ def main() -> None:
     bootstrap = pd.read_csv(RESULTS / "nested_selection_bootstrap.csv")
     cases = pd.read_csv(RESULTS / "zero_gate_positive_shapley_cases.csv")
     players = pd.read_csv(RESULTS / "player_partition_summary.csv")
+    all_cells = pd.read_csv(RESULTS / "all_40_cells.csv")
+    rashomon = pd.read_csv(RESULTS / "rashomon_intervals.csv")
+    nested_metrics = pd.read_csv(RESULTS / "nested_selection_metrics.csv")
+    nulls = pd.read_csv(RESULTS / "null_experiments.csv")
 
     order = ["gate", "singleton", "shapley", "inner_search"]
     labels = {
@@ -75,9 +79,32 @@ def main() -> None:
         "",
     ])
     (OUT / "generated_tables.md").write_text("\n".join(md), encoding="utf-8")
-    print("wrote supplement/table_nested_selection.tex and supplement/generated_tables.md")
+
+    full = [
+        "# Complete generated tables",
+        "",
+        "These tables are generated verbatim from the committed canonical CSVs.",
+        "",
+        "## All 40 corpus/representation attribution cells",
+        "",
+        all_cells.to_markdown(index=False, floatfmt=".6g"),
+        "",
+        "## Complete Rashomon coordinate intervals",
+        "",
+        rashomon.to_markdown(index=False, floatfmt=".6g"),
+        "",
+        "## Nested selection by corpus and budget",
+        "",
+        nested_metrics.to_markdown(index=False, floatfmt=".6g"),
+        "",
+        "## Null experiments",
+        "",
+        nulls.to_markdown(index=False, floatfmt=".6g"),
+        "",
+    ]
+    (OUT / "generated_full_tables.md").write_text("\n".join(full), encoding="utf-8")
+    print("wrote compact and complete generated tables")
 
 
 if __name__ == "__main__":
     main()
-

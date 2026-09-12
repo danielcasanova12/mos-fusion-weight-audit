@@ -1,0 +1,21 @@
+experiment,dataset,true_rho_corr_vs_negI,null_mean,null_sd,null_p025,null_p975,null_max,emp_p_null_ge_true,n_null,n_pairs,feasible,rho_obs_corr_vs_negI,rho_matched_null,note,beta_corr,beta_mean,beta_min,variant,observed_nzero,observed_count,null_nzero_mean,null_nzero_max,null_count_mean,null_count_max,null_conv_rate
+permuted_redundancy,brspeech,0.3681,-0.3806,0.0413,-0.4621,-0.2957,-0.2042,0.001,1000.0,,,,,,,,,,,,,,,,
+permuted_redundancy,bvcc,0.9431,-0.846,0.0137,-0.8722,-0.8199,-0.8012,0.001,1000.0,,,,,,,,,,,,,,,,
+permuted_redundancy,singmos,0.4432,-0.3411,0.0357,-0.4053,-0.2661,-0.2244,0.001,1000.0,,,,,,,,,,,,,,,,
+permuted_redundancy,tmhintqi,0.9574,-0.8453,0.0098,-0.8664,-0.8288,-0.8126,0.001,1000.0,,,,,,,,,,,,,,,,
+covariance_matched_gaussian,brspeech,,,,,,,,,45.0,15.0,0.3097496706192358,0.3015810276679841,"Gaussian y+noise matched singleton MSE+corr, optimal 2-expert simplex; complementarity=null",,,,,,,,,,,
+covariance_matched_gaussian,bvcc,,,,,,,,,45.0,41.0,0.957839262187088,0.9565217391304348,"Gaussian y+noise matched singleton MSE+corr, optimal 2-expert simplex; complementarity=null",,,,,,,,,,,
+covariance_matched_gaussian,singmos,,,,,,,,,45.0,42.0,0.427931488801054,0.8013175230566533,"Gaussian y+noise matched singleton MSE+corr, optimal 2-expert simplex; complementarity=null",,,,,,,,,,,
+covariance_matched_gaussian,tmhintqi,,,,,,,,,45.0,26.0,0.9723320158102764,0.8852437417654809,"Gaussian y+noise matched singleton MSE+corr, optimal 2-expert simplex; complementarity=null",,,,,,,,,,,
+residual_controls,brspeech,,,,,,,,,,,,,,0.2341655626687927,0.9432295599679804,-0.1615584890502905,,,,,,,,
+residual_controls,bvcc,,,,,,,,,,,,,,0.3771360939361788,0.6984321714665,-0.1368162246382681,,,,,,,,
+residual_controls,singmos,,,,,,,,,,,,,,0.0474662985231331,1.0525229761938513,-0.1467072223050621,,,,,,,,
+residual_controls,tmhintqi,,,,,,,,,,,,,,0.5501420788810476,0.5294079015560833,-0.1233677124779519,,,,,,,,
+full_pipeline,brspeech,,,,,,,,5.0,,,,,"eigenvalue clipping: pairwise corr within .05 mean/.26 max, one marginal MSE off by <=.57; ftol=1e-12+PG fallback, conv 1.00",,,,eigclip,6.0,5.0,0.0,0.0,0.0,0.0,1.0
+full_pipeline,bvcc,,,,,,,,5.0,,,,,"eigenvalue clipping: pairwise corr within .05 mean/.26 max, one marginal MSE off by <=.57; ftol=1e-12+PG fallback, conv 1.00",,,,eigclip,4.0,4.0,0.0,0.0,0.0,0.0,1.0
+full_pipeline,singmos,,,,,,,,5.0,,,,,"eigenvalue clipping: pairwise corr within .05 mean/.26 max, one marginal MSE off by <=.57; ftol=1e-12+PG fallback, conv 1.00",,,,eigclip,3.0,3.0,0.0,0.0,0.0,0.0,1.0
+full_pipeline,tmhintqi,,,,,,,,5.0,,,,,"eigenvalue clipping: pairwise corr within .05 mean/.26 max, one marginal MSE off by <=.57; ftol=1e-12+PG fallback, conv 1.00",,,,eigclip,4.0,4.0,0.0,0.0,0.0,0.0,1.0
+full_pipeline,brspeech,,,,,,,,5.0,,,,,"Higham nearest-correlation: marginal MSEs within .15, corr within .10 mean/.53 max; ftol=1e-12+PG fallback, conv 1.00",,,,higham,6.0,5.0,0.0,0.0,0.0,0.0,1.0
+full_pipeline,bvcc,,,,,,,,5.0,,,,,"Higham nearest-correlation: marginal MSEs within .15, corr within .10 mean/.53 max; ftol=1e-12+PG fallback, conv 1.00",,,,higham,4.0,4.0,0.0,0.0,0.0,0.0,1.0
+full_pipeline,singmos,,,,,,,,5.0,,,,,"Higham nearest-correlation: marginal MSEs within .15, corr within .10 mean/.53 max; ftol=1e-12+PG fallback, conv 1.00",,,,higham,3.0,3.0,0.0,0.0,0.0,0.0,1.0
+full_pipeline,tmhintqi,,,,,,,,5.0,,,,,"Higham nearest-correlation: marginal MSEs within .15, corr within .10 mean/.53 max; ftol=1e-12+PG fallback, conv 1.00",,,,higham,4.0,4.0,0.0,0.0,0.0,0.0,1.0

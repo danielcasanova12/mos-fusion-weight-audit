@@ -5,9 +5,21 @@ type: software
 authors:
   - family-names: Casanova
     given-names: Daniel
+  - family-names: Ferreira
+    given-names: Alef Iury
+  - family-names: Casanova
+    given-names: Edresson
+  - family-names: Gris
+    given-names: Lucas
+  - family-names: Botelho
+    given-names: Pedro Lustosa Rege
+  - family-names: Silva
+    given-names: Fernanda
+  - family-names: Soares
+    given-names: Anderson da Silva
 repository-code: "https://github.com/danielcasanova12/mos-fusion-weight-audit"
 version: "1.0.0"
-date-released: "2026-09-12"
+# Add date-released and doi only after the immutable GitHub Release is published.
 license: MIT
 keywords:
   - mean opinion score
@@ -15,4 +27,3 @@ keywords:
   - Shapley value
   - representation selection
   - system-disjoint evaluation
-

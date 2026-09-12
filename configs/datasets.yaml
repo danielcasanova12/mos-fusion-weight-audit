@@ -1,0 +1,29 @@
+datasets:
+  brspeech:
+    public_name: BRSpeechMOS
+    grouping_key: system_id
+    language: Portuguese
+    redistribution: prohibited_in_this_artifact
+    note: Six systems; system-level inference is explicitly exploratory.
+  bvcc:
+    public_name: BVCC
+    grouping_key: system_id
+    language: English
+    redistribution: prohibited_in_this_artifact
+    note: Upstream Blizzard Challenge components may not be redistributed.
+  singmos:
+    public_name: SingMOS
+    grouping_key: system_id
+    language: multilingual_singing
+    redistribution: prohibited_in_this_artifact
+  tmhintqi:
+    public_name: TMHINT-QI
+    grouping_key: system_id
+    language: Mandarin
+    redistribution: prohibited_in_this_artifact
+
+split_policy:
+  primary_expert_oof: grouped_by_system
+  nested_outer: GroupKFold_5_by_system
+  nested_inner: GroupKFold_4_by_system
+  leakage_rule: no_outer_system_used_for_transform_fitting_expert_fitting_ranking_or_gate_calibration
