@@ -1,0 +1,54 @@
+{
+  "created_at": "2026-09-12T00:32:23+0000",
+  "datasets": [
+    "brspeech",
+    "bvcc",
+    "singmos",
+    "tmhintqi"
+  ],
+  "features": [
+    "whisper",
+    "contentvec12",
+    "wavlm",
+    "beats",
+    "auditory_erb",
+    "speaker",
+    "rmvpe_cont",
+    "rmvpe_quant",
+    "ced",
+    "egemaps"
+  ],
+  "ridge_alpha": 10.0,
+  "ridge_solver": "sklearn Ridge lsqr tol=1e-10 max_iter=10000",
+  "outer_split": "GroupKFold(5) by training system_id",
+  "inner_split": "GroupKFold(4) within outer-training systems",
+  "preprocessing": "fold-only standardization; eGeMAPS fold-only 0.1/99.9% winsorization",
+  "selection_methods": [
+    "gate",
+    "shapley",
+    "singleton",
+    "inner_search"
+  ],
+  "budgets": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "primary_budgets": [
+    1,
+    2,
+    3,
+    5
+  ],
+  "test_use": "each outer-held system is used once, after selection and gate calibration",
+  "primary_metric": "equal-system MSE",
+  "bootstrap": 10000,
+  "seed": 20260912
+}

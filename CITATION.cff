@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this artifact, cite the archived ICASSP 2027 submission release."
+title: "MOS Fusion Weight Audit: ICASSP 2027 Reproducibility Artifact"
+type: software
+authors:
+  - family-names: Casanova
+    given-names: Daniel
+repository-code: "https://github.com/danielcasanova12/mos-fusion-weight-audit"
+version: "1.0.0"
+date-released: "2026-09-12"
+license: MIT
+keywords:
+  - mean opinion score
+  - speech quality
+  - Shapley value
+  - representation selection
+  - system-disjoint evaluation
+

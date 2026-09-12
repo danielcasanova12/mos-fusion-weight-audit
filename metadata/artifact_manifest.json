@@ -1,0 +1,170 @@
+{
+  "artifact_version": "v1.0-icassp2027-submission",
+  "hash_algorithm": "sha256",
+  "files": {
+    ".gitignore": {
+      "bytes": 117,
+      "sha256": "ec9fe93482852f75ae943926f6928e95cb0f5f21910f0b10d21edc70288808ac"
+    },
+    ".zenodo.json": {
+      "bytes": 565,
+      "sha256": "e8d0383b3d8d30d74bd1d57bd16db05e4b31033924f9c318d14761c3a0281832"
+    },
+    "CITATION.cff": {
+      "bytes": 520,
+      "sha256": "ec694ec242b3073ce01870eb4fe495d31224fefa76d3a150502ecb9f878db363"
+    },
+    "configs/experiment.yaml": {
+      "bytes": 1103,
+      "sha256": "528eab25f8454bbbf8e58a4b82c077b6536e0616c7165363fc962a9af528d21e"
+    },
+    "LICENSE": {
+      "bytes": 1090,
+      "sha256": "f827bfb7c58b853aa1d59a19a5a1fa079008446d4ea6ebf619cc53f8fcf37434"
+    },
+    "metadata/checkpoints.md": {
+      "bytes": 990,
+      "sha256": "185843371090e310a409dd228d2f7218f39df8a51c29865debb9c80b4370e54e"
+    },
+    "metadata/datasets.md": {
+      "bytes": 1585,
+      "sha256": "4b83c47eef8e4bb0761aa658c96c7eab19fcbd5918df73b7abe859f086de3e4e"
+    },
+    "metadata/environment.md": {
+      "bytes": 601,
+      "sha256": "dac3c19f94d5a38a229aa2821ad73ba5b969452a9379630e030ecc4914979b7a"
+    },
+    "metadata/nested_selection_protocol.json": {
+      "bytes": 1014,
+      "sha256": "32512331c17e9d56e56ad5a8170cbe8f6e31725a48b0c3e97afa67214c7ac201"
+    },
+    "metadata/seeds.json": {
+      "bytes": 392,
+      "sha256": "6345a5ff78c44e467accd7b0216e1ce42a4046b532b0e4b3e6054e3058041531"
+    },
+    "paper/main.tex": {
+      "bytes": 28422,
+      "sha256": "b3dc1d7f0b87752670467e001f4629acf8daeb1245894f525d9f215733dd4103"
+    },
+    "paper/refs.bib": {
+      "bytes": 12198,
+      "sha256": "825777470aa5aabb3613b613082d47ea83db0ca92bb677587def8f562afe318f"
+    },
+    "README.md": {
+      "bytes": 7004,
+      "sha256": "c9aae4487e7b1bed119f033ffd5ed60800de9d2db6831af207c0819079fc7a04"
+    },
+    "requirements.txt": {
+      "bytes": 110,
+      "sha256": "4ecdf8afc36844d68f4a7bfdb8070eb5e8d0e7ae0755a9260e36285aac60c748"
+    },
+    "results/attribution_40cells.csv": {
+      "bytes": 22479,
+      "sha256": "72136c5b88ce95a3d3d35bcbfe6d201a85a4d63b154032b5540207c69c4b36d6"
+    },
+    "results/coalition_values.csv": {
+      "bytes": 867040,
+      "sha256": "0528b99e5dd16b04b23eead25a80c310b95b07a0b4215dd74ca79000f3d6dcbf"
+    },
+    "results/importance_methods.csv": {
+      "bytes": 4750,
+      "sha256": "7a140323f2e65a44feaf7e94e5cbe5338554d8e34c2312b94a118a8481e25043"
+    },
+    "results/nested_selection_bootstrap.csv": {
+      "bytes": 686,
+      "sha256": "a12f788e6abb3eaa134e4e543696e4c6c8fef48dccf5d19211ceec59ff827615"
+    },
+    "results/nested_selection_folds.csv": {
+      "bytes": 233532,
+      "sha256": "e6fe00be735ff1bf4a2adc0fad7c61c0f57019109afc6f0e30dc02c73615433a"
+    },
+    "results/nested_selection_summary.csv": {
+      "bytes": 348,
+      "sha256": "47f985238ae221321864db71689fce2580f16021363a3ad983600b2cfe14e65a"
+    },
+    "results/player_partition_summary.csv": {
+      "bytes": 2454,
+      "sha256": "dca787d10a138790f2a42a5f2838256acbcd28a350ec77251069ac59a659b9aa"
+    },
+    "results/rashomon_weight_ranges.csv": {
+      "bytes": 31261,
+      "sha256": "00bc97a622275b1604ab6fbea6e4b3ee306bca2b26f519f20c9bbbaa81f0a9ae"
+    },
+    "results/system_level_contrasts.csv": {
+      "bytes": 2850,
+      "sha256": "348fe6b338e9f01754e657d685cec74d45d80b7cec52c8c6587e96828f803c10"
+    },
+    "results/zero_gate_positive_shapley_cases.csv": {
+      "bytes": 1742,
+      "sha256": "09adce92af7e9848e8feced8df40d7104dd81315545213e195468bc7ad666707"
+    },
+    "scripts/build_manifest.py": {
+      "bytes": 956,
+      "sha256": "60db042df508fa684b05ccdb07d656ce59c82ba8753c7c83e79d867ea0fee46b"
+    },
+    "scripts/build_public_tables.py": {
+      "bytes": 2692,
+      "sha256": "e40dd50af7b34d0209ef407a581b2bfb2effafc032fb39365efcb0d08cd75aed"
+    },
+    "scripts/build_supplement.py": {
+      "bytes": 7301,
+      "sha256": "2f2dfcce051891a143034db889883a27048e82b9fff6fdbc1d0dfc1c448cb6b1"
+    },
+    "scripts/reproduce_analysis.sh": {
+      "bytes": 177,
+      "sha256": "3a23dc0322345fdd02a203ecee37264caa5d3ae78ae5ec7931be850749920ce2"
+    },
+    "scripts/reproduce_tables.sh": {
+      "bytes": 110,
+      "sha256": "a192872d09ecf1bcb1c7f8a7974f5e84fbd774d278f6fbc65e10edb3ad39ea63"
+    },
+    "scripts/verify_release.py": {
+      "bytes": 3609,
+      "sha256": "71508a65e4521ada72b75dbc6a89f8ab8defcb9bc4339e62495bd5f4c5957493"
+    },
+    "src/audit_attribution_evidence.py": {
+      "bytes": 28006,
+      "sha256": "b100538c28c58183ab726d445a698b16a24bc52db7a7e2b7dc3f2ccb83a3252d"
+    },
+    "src/audit_player_partition_sensitivity.py": {
+      "bytes": 11125,
+      "sha256": "336b39ec19c76b1a6675e3f47c6d8187c42372f34bdfbdf14a3ab4ea3230e129"
+    },
+    "src/kkt_rashomon_audit.py": {
+      "bytes": 6582,
+      "sha256": "65debd6d91cfa5adf0431e19244b6de6f755a983cee5bb13c4be5cc2e03f1e73"
+    },
+    "src/qap_interaction_test.py": {
+      "bytes": 3311,
+      "sha256": "421c7b8d4e11c310381b78e113367948cbf591b339e3e93ea414af734e1405cd"
+    },
+    "src/run_final_icasp_controls.py": {
+      "bytes": 43195,
+      "sha256": "4b7f7bd25cadcfdfc55777a077e3f95255570ad8a8738b23955265d82e0ecc75"
+    },
+    "src/run_missing_experiments.py": {
+      "bytes": 35491,
+      "sha256": "4b27172cdc7d9aeed274c0ec8c72dcedd1aa2401a75ae1c0f7304cd64a53fca4"
+    },
+    "src/run_system_disjoint_selection.py": {
+      "bytes": 31667,
+      "sha256": "72cb5bed0554a91dceaf0bd212d7317fc66df1cc759836de4884726f8adeefb3"
+    },
+    "supplement/generated_tables.md": {
+      "bytes": 12452,
+      "sha256": "d5f27e8e9ea88b06ccf08c04d03a6101703618bff1c9706cf75e1e51710397b3"
+    },
+    "supplement/README.md": {
+      "bytes": 549,
+      "sha256": "d7d923b578308bdb2932d5826e54a0aa861c047cf8389ddb63cbe30d458f7546"
+    },
+    "supplement/supplementary_material.pdf": {
+      "bytes": 43965,
+      "sha256": "bac3390b9dc9205b5902457af6138fdae63cc4d9fdb5c16561a417dac84dd99c"
+    },
+    "supplement/table_nested_selection.tex": {
+      "bytes": 305,
+      "sha256": "ed3ef42d292d135d58c5bdecc055b953f11cf55b71a0517d6d211f50f358815b"
+    }
+  }
+}
