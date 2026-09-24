@@ -1,5 +1,9 @@
 # MOS Fusion Audit
 
+> **Legacy snapshot.** The preliminary result package is kept for provenance.
+> For the submitted manuscript, use the corrected release at
+> `paper/icassp2027/supplementary_reproducibility_artifact_final_20260924.tgz`.
+
 Compact public artifact for the ICASSP 2027 paper **“Do MOS Fusion Weights
 Select Useful Embeddings? A System-Disjoint Attribution Audit.”** It contains
 only the frozen configurations, checkpoint identifiers, numerical results, and
@@ -109,8 +113,3 @@ inspect the CSVs and PDF. This compact artifact is a frozen results package;
 the private extraction/fitting drivers and licensed feature caches are not
 part of this public snapshot.
 
-## Citation and release
-
-Please cite the paper and archived release at
-<https://doi.org/10.5281/zenodo.22729723> (published 2026-09-12). The archived
-tag is `v1.0-icassp2027-submission`.

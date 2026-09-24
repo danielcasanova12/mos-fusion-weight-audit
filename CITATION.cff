@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this artifact, cite the archived ICASSP 2027 submission release."
+message: "If you use this artifact, cite the associated paper and repository."
 title: "MOS Fusion Weight Audit: ICASSP 2027 Reproducibility Artifact"
 type: software
 authors:
@@ -28,10 +28,8 @@ authors:
     given-names: Anderson da Silva
     affiliation: "AKCIT, Brazil; Federal University of Goiás (UFG), Brazil"
 repository-code: "https://github.com/danielcasanova12/mos-fusion-weight-audit"
-version: "1.0.0"
-date-released: 2026-09-12
-doi: 10.5281/zenodo.22729723
-url: "https://doi.org/10.5281/zenodo.22729723"
+version: "1.1.0"
+date-released: 2026-09-24
 license: MIT
 keywords:
   - mean opinion score
