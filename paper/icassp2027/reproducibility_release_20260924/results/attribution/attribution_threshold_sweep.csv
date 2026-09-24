@@ -1,0 +1,26 @@
+dataset,protocol,threshold,gate_rule,n_cells,gate_zero_count,gate_zero_positive_shapley_count,loo_signed_le_threshold_count,loo_signed_le_threshold_positive_shapley_count,loo_absolute_le_threshold_count,loo_absolute_le_threshold_positive_shapley_count
+ALL,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.0,w == 0,40,6,6,12,10,0,0
+ALL,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,1e-08,w < threshold,40,17,16,16,14,7,7
+ALL,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,1e-06,w < threshold,40,17,16,21,18,17,16
+ALL,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.0001,w < threshold,40,17,16,21,18,18,17
+ALL,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.001,w < threshold,40,17,16,24,21,21,20
+brspeech,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.0,w == 0,10,2,2,4,3,0,0
+brspeech,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,1e-08,w < threshold,10,6,5,5,4,3,3
+brspeech,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,1e-06,w < threshold,10,6,5,7,5,6,5
+brspeech,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.0001,w < threshold,10,6,5,7,5,6,5
+brspeech,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.001,w < threshold,10,6,5,7,5,6,5
+bvcc,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.0,w == 0,10,2,2,5,5,0,0
+bvcc,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,1e-08,w < threshold,10,4,4,5,5,1,1
+bvcc,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,1e-06,w < threshold,10,4,4,5,5,4,4
+bvcc,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.0001,w < threshold,10,4,4,5,5,4,4
+bvcc,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.001,w < threshold,10,4,4,5,5,4,4
+singmos,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.0,w == 0,10,0,0,2,1,0,0
+singmos,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,1e-08,w < threshold,10,3,3,2,1,0,0
+singmos,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,1e-06,w < threshold,10,3,3,4,3,3,3
+singmos,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.0001,w < threshold,10,3,3,4,3,3,3
+singmos,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.001,w < threshold,10,3,3,5,4,4,4
+tmhintqi,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.0,w == 0,10,2,2,1,1,0,0
+tmhintqi,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,1e-08,w < threshold,10,4,4,4,4,3,3
+tmhintqi,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,1e-06,w < threshold,10,4,4,5,5,4,4
+tmhintqi,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.0001,w < threshold,10,4,4,5,5,5,5
+tmhintqi,common_alpha_10_final_foldwise_egemaps_winsor_0p1pct,0.001,w < threshold,10,4,4,7,7,7,7

@@ -1,0 +1,12 @@
+{
+  "primary_protocol": 20260910,
+  "test_bootstrap_and_contrasts": 20260909,
+  "equal_system_shapley_and_bootstrap": 20260911,
+  "matched_nulls_and_system_disjoint_selection": 20260912,
+  "train_bootstrap_draws": "stable_seed(dataset, 9) + 104729 * replicate",
+  "system_bootstrap_replicates": 10000,
+  "sign_flip_permutations": 100000,
+  "outer_group_folds": 5,
+  "inner_group_folds": 4
+}
+

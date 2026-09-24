@@ -1,0 +1,6 @@
+{
+  "n_verified": 16,
+  "direction": "reference MSE minus candidate MSE; positive is improvement",
+  "max_absolute_error": 8.326672684688674e-17,
+  "note": "Legacy comparison names such as full_minus_basic identify model order, not arithmetic sign. Numerical outputs were not changed."
+}

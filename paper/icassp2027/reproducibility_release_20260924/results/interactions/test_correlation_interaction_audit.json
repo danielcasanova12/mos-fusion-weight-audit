@@ -1,0 +1,9 @@
+{
+  "status": "verified",
+  "protocol": "reduced_9_player_no_egemaps_common_alpha10",
+  "n_bootstrap": 2000,
+  "seed": 20260911,
+  "scope": "test-system sampling with fitted experts and gates fixed",
+  "reason_for_reduced_game": "post-winsorized final eGeMAPS prediction vector absent locally",
+  "max_saved_mse_reconstruction_error": 9.940391963525474e-05
+}

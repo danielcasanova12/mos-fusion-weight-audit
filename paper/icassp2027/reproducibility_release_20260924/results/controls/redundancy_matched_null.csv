@@ -1,0 +1,5 @@
+dataset,n_pairs,feasible,rho_obs_corr_vs_negI,rho_matched_null,note
+brspeech,45,15,0.3097496706192358,0.3015810276679841,"Gaussian y+noise matched singleton MSE+corr, optimal 2-expert simplex; complementarity=null"
+bvcc,45,41,0.9578392621870881,0.9565217391304347,"Gaussian y+noise matched singleton MSE+corr, optimal 2-expert simplex; complementarity=null"
+singmos,45,42,0.427931488801054,0.8013175230566533,"Gaussian y+noise matched singleton MSE+corr, optimal 2-expert simplex; complementarity=null"
+tmhintqi,45,26,0.9723320158102765,0.8852437417654809,"Gaussian y+noise matched singleton MSE+corr, optimal 2-expert simplex; complementarity=null"

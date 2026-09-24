@@ -1,0 +1,229 @@
+{
+  "status": "verified",
+  "protocol": "common_alpha_10_final_foldwise_egemaps_winsor_0p1pct",
+  "checks": {
+    "4092_alpha10_vs_final_coalition_losses_max_abs_error": 0.0,
+    "40_alpha10_gate_weights_max_abs_error": 0.0,
+    "40_alpha10_shapley_values_max_abs_error": 1.1102230246251565e-16,
+    "brspeech_saved_gate_max_abs_error": 7.979727989493313e-17,
+    "brspeech_recomputed_shapley_max_abs_error": 8.326672684688674e-17,
+    "brspeech_recomputed_loo_max_abs_error": 8.066464163292153e-17,
+    "bvcc_saved_gate_max_abs_error": 8.326672684688674e-17,
+    "bvcc_recomputed_shapley_max_abs_error": 7.546047120499111e-17,
+    "bvcc_recomputed_loo_max_abs_error": 9.8879238130678e-17,
+    "singmos_saved_gate_max_abs_error": 8.326672684688674e-17,
+    "singmos_recomputed_shapley_max_abs_error": 6.938893903907228e-17,
+    "singmos_recomputed_loo_max_abs_error": 4.8138576458356397e-17,
+    "tmhintqi_saved_gate_max_abs_error": 7.112366251504909e-17,
+    "tmhintqi_recomputed_shapley_max_abs_error": 8.326672684688674e-17,
+    "tmhintqi_recomputed_loo_max_abs_error": 9.107298248878237e-17,
+    "40_test_ci_point_values_max_abs_error": 1.942890293094024e-16
+  },
+  "evidence_scope": "Saved numeric outputs, manifests, and producing source; raw experts were not refitted by this audit.",
+  "selected_alpha_results_used": false,
+  "older_preprocessing_results_used": false,
+  "missing_optional_inputs": [],
+  "case_lists": {
+    "loo_signed_18_cases": [
+      "brspeech/beats",
+      "brspeech/auditory_erb",
+      "brspeech/speaker",
+      "brspeech/rmvpe_cont",
+      "brspeech/ced",
+      "bvcc/whisper",
+      "bvcc/auditory_erb",
+      "bvcc/rmvpe_cont",
+      "bvcc/rmvpe_quant",
+      "bvcc/egemaps",
+      "singmos/auditory_erb",
+      "singmos/rmvpe_cont",
+      "singmos/rmvpe_quant",
+      "tmhintqi/auditory_erb",
+      "tmhintqi/speaker",
+      "tmhintqi/rmvpe_cont",
+      "tmhintqi/rmvpe_quant",
+      "tmhintqi/egemaps"
+    ],
+    "zero_gate_positive_shapley_cases": [
+      "brspeech/beats",
+      "brspeech/auditory_erb",
+      "brspeech/speaker",
+      "brspeech/rmvpe_cont",
+      "brspeech/ced",
+      "bvcc/auditory_erb",
+      "bvcc/rmvpe_cont",
+      "bvcc/rmvpe_quant",
+      "bvcc/egemaps",
+      "singmos/auditory_erb",
+      "singmos/rmvpe_cont",
+      "singmos/rmvpe_quant",
+      "tmhintqi/auditory_erb",
+      "tmhintqi/rmvpe_cont",
+      "tmhintqi/rmvpe_quant",
+      "tmhintqi/egemaps"
+    ],
+    "loo_absolute_zero_positive_shapley_cases": [
+      "brspeech/beats",
+      "brspeech/auditory_erb",
+      "brspeech/speaker",
+      "brspeech/rmvpe_cont",
+      "brspeech/ced",
+      "bvcc/auditory_erb",
+      "bvcc/rmvpe_cont",
+      "bvcc/rmvpe_quant",
+      "bvcc/egemaps",
+      "singmos/auditory_erb",
+      "singmos/rmvpe_cont",
+      "singmos/rmvpe_quant",
+      "tmhintqi/auditory_erb",
+      "tmhintqi/rmvpe_cont",
+      "tmhintqi/rmvpe_quant",
+      "tmhintqi/egemaps"
+    ]
+  },
+  "sources": {
+    "run_reviewer_priority_cpu.py": {
+      "task_importance_comparison": {
+        "start_line": 428,
+        "end_line": 483
+      },
+      "task_alpha_bundles": {
+        "start_line": 879,
+        "end_line": 902
+      },
+      "bootstrap_refit_bundle": {
+        "start_line": 660,
+        "end_line": 708
+      },
+      "task_full_train_bootstrap": {
+        "start_line": 711,
+        "end_line": 868
+      },
+      "task_conditional_gate_bootstrap": {
+        "start_line": 161,
+        "end_line": 232
+      },
+      "coalition_game": {
+        "start_line": 958,
+        "end_line": 984
+      }
+    },
+    "run_cpu_submission_finalization.py": {
+      "cmd_prepare_primary": {
+        "start_line": 95,
+        "end_line": 165
+      },
+      "cmd_explain": {
+        "start_line": 253,
+        "end_line": 315
+      },
+      "bootstrap_cluster_mean": {
+        "start_line": 233,
+        "end_line": 241
+      },
+      "prediction_from_lattice": {
+        "start_line": 244,
+        "end_line": 250
+      }
+    },
+    "run_final_icasp_controls.py": {
+      "robust_oof": {
+        "start_line": 244,
+        "end_line": 268
+      },
+      "transformed_arrays": {
+        "start_line": 233,
+        "end_line": 241
+      },
+      "fit_simplex": {
+        "start_line": 99,
+        "end_line": 139
+      }
+    }
+  },
+  "input_sha256": {
+    "paper_reviewer_priority_cpu\\manifest.json": "c47495c80e341cf792712487c5ec1c7a399eb30c09c0c9afc69d25638c2e1561",
+    "paper_reviewer_priority_cpu\\importance_methods.csv": "7a140323f2e65a44feaf7e94e5cbe5338554d8e34c2312b94a118a8481e25043",
+    "paper_reviewer_priority_cpu\\alpha_coalition_lattices.csv": "0528b99e5dd16b04b23eead25a80c310b95b07a0b4215dd74ca79000f3d6dcbf",
+    "paper_reviewer_priority_cpu\\alpha_shapley_and_gate.csv": "a665a37cc34a1baff0f707cdd989e6164709a4eb4259f5cc8bfb9a3c260f9afe",
+    "submission_final_cpu_review\\primary_protocol.json": "83c7197ef52bf87001efcec19fca083ea8a3c133a46f1bf5499d3d7a2303a34b",
+    "submission_final_cpu_review\\converged_oof_lattice.csv": "4a7d724054aa384936bca742d0a0270873eeb30a6919e4322c9b3dfbcca0536b",
+    "paper_reviewer_priority_cpu\\full_train_bootstrap_weights.csv": "5378859e36b3644a76c5641d55303395b5f77f573180ce7d4e146245cc4b7727",
+    "icassp2027\\review_evidence\\train_shapley_50reps.csv": "4c6bc7374fabbf17db14f9f4b49bc382cea7c1c6571d182f203a929f3ffb2845",
+    "paper_reviewer_priority_cpu\\conditional_gate_bootstrap_replicates.csv": "73009cd91fa9adbbde780f4b6d6614cec49785307b6ddc4d4c86979381e402a4",
+    "submission_final_cpu_review\\oof_shapley_test_cluster_bootstrap.csv": "54af5d739f14d01713468be15589d5d41833a80717ec3794c8e7a8cadea48b5b",
+    "paper_reviewer_priority_cpu\\loo_zero_shapley_positive.csv": "f72acd1a1bf28b837ada40a5429b8d8443f95ceefbc0134965492dfdc289c567",
+    "run_reviewer_priority_cpu.py": "78bcf105df9bba875a9f89846d2f778dbd7f845372e0726b98a40d163889216f",
+    "run_cpu_submission_finalization.py": "2cbb049cad8890d763edf22c931525048fb624dafdf5c3dae7bd02a958d7ad35",
+    "run_final_icasp_controls.py": "4b7f7bd25cadcfdfc55777a077e3f95255570ad8a8738b23955265d82e0ecc75"
+  },
+  "uncertainty": {
+    "training_gate": "100 system bootstrap refits, including experts and gate",
+    "training_shapley": "All 50 system bootstrap refits, full 1023-coalition games, fixed observed test set; descriptive percentile ranges",
+    "conditional_gate": "200 training-system resamples, gate refits with frozen expert predictions",
+    "test_shapley": "10000 test-system resamples, fixed fitted models, utterance-weighted bootstrap mean; same-protocol point values verified"
+  },
+  "zero_gate_positive_shapley_stability": {
+    "n_cases": 16,
+    "training_percentile_low_above_zero": 10,
+    "conditional_test_ci_low_above_zero": 11,
+    "training_positive_frequency_below_one": [
+      {
+        "dataset": "brspeech",
+        "feature": "beats",
+        "train_shapley_positive_count": 25,
+        "train_shapley_n": 50,
+        "train_shapley_positive_frequency_gt_0": 0.5
+      },
+      {
+        "dataset": "brspeech",
+        "feature": "auditory_erb",
+        "train_shapley_positive_count": 32,
+        "train_shapley_n": 50,
+        "train_shapley_positive_frequency_gt_0": 0.64
+      },
+      {
+        "dataset": "brspeech",
+        "feature": "rmvpe_cont",
+        "train_shapley_positive_count": 49,
+        "train_shapley_n": 50,
+        "train_shapley_positive_frequency_gt_0": 0.98
+      },
+      {
+        "dataset": "brspeech",
+        "feature": "ced",
+        "train_shapley_positive_count": 49,
+        "train_shapley_n": 50,
+        "train_shapley_positive_frequency_gt_0": 0.98
+      },
+      {
+        "dataset": "bvcc",
+        "feature": "rmvpe_quant",
+        "train_shapley_positive_count": 26,
+        "train_shapley_n": 50,
+        "train_shapley_positive_frequency_gt_0": 0.52
+      },
+      {
+        "dataset": "singmos",
+        "feature": "rmvpe_quant",
+        "train_shapley_positive_count": 12,
+        "train_shapley_n": 50,
+        "train_shapley_positive_frequency_gt_0": 0.24
+      },
+      {
+        "dataset": "tmhintqi",
+        "feature": "rmvpe_cont",
+        "train_shapley_positive_count": 44,
+        "train_shapley_n": 50,
+        "train_shapley_positive_frequency_gt_0": 0.88
+      },
+      {
+        "dataset": "tmhintqi",
+        "feature": "rmvpe_quant",
+        "train_shapley_positive_count": 9,
+        "train_shapley_n": 50,
+        "train_shapley_positive_frequency_gt_0": 0.18
+      }
+    ]
+  }
+}

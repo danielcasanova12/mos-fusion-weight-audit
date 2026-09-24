@@ -1,0 +1,26 @@
+{
+  "status": "verified",
+  "scope": "cached release evidence only; no audio or neural encoder refitting",
+  "selector": {
+    "objective": "equal_system_MSE_inner_and_outer",
+    "outer_folds": 20,
+    "bootstrap_replicates": 10000,
+    "macro_delta_relative_to_exhaustive": {
+      "gate": -0.015056024906991356,
+      "singleton": -0.0071584692922981585,
+      "shapley": -0.021451644672244856
+    },
+    "exclude_brspeechmos_shapley_delta_pct": 0.629978258331526
+  },
+  "attribution": {
+    "cells": 40,
+    "training_refits_per_cell": 50,
+    "discordant_zero_gate_positive_shapley": 16,
+    "discordant_cells_positive_in_all_50_refits": 8
+  },
+  "sha256": {
+    "submitted_manuscript.pdf": "ee03a0168c8f344bd4c6056e3054bbe123610f3e49a6b3cf4435a8aca70de3ea",
+    "macro_method_bootstrap.csv": "f75335838f743b62cfc2e7526949346ff3689886501cb45c396f1b9e748d2f3b",
+    "train_shapley_50reps.csv": "4c6bc7374fabbf17db14f9f4b49bc382cea7c1c6571d182f203a929f3ffb2845"
+  }
+}

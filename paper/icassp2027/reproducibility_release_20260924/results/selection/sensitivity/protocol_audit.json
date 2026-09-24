@@ -1,0 +1,114 @@
+{
+  "checks": {
+    "completion_status": true,
+    "outer_folds": true,
+    "inner_selection_metric": true,
+    "gate_calibration_metric": true,
+    "outer_evaluation_metric": true,
+    "utterance_mse_diagnostic_only": true,
+    "complete_item_coverage": true,
+    "one_outer_fold_per_system": true,
+    "expected_selection_rows": true,
+    "errors_file_absent": true,
+    "all_protocol_checks_pass": true
+  },
+  "protocol": {
+    "created_at": "2026-09-16T13:34:58+0000",
+    "datasets": [
+      "brspeech",
+      "bvcc",
+      "singmos",
+      "tmhintqi"
+    ],
+    "features": [
+      "whisper",
+      "contentvec12",
+      "wavlm",
+      "beats",
+      "auditory_erb",
+      "speaker",
+      "rmvpe_cont",
+      "rmvpe_quant",
+      "ced",
+      "egemaps"
+    ],
+    "ridge_alpha": 10.0,
+    "ridge_solver": "sklearn Ridge lsqr tol=1e-10 max_iter=10000",
+    "outer_split": "GroupKFold(5) by training system_id",
+    "inner_split": "GroupKFold(4) within outer-training systems",
+    "preprocessing": "fold-only standardization; eGeMAPS fold-only 0.1/99.9% winsorization",
+    "selection_methods": [
+      "gate",
+      "shapley",
+      "singleton",
+      "inner_search"
+    ],
+    "budgets": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "primary_budgets": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "test_use": "each outer-held system is used once, after selection and gate calibration",
+    "inner_selection_metric": "equal-system MSE",
+    "gate_calibration_metric": "equal-system MSE",
+    "outer_evaluation_metric": "equal-system MSE",
+    "utterance_mse_role": "diagnostic only; never used for selection or gate fitting",
+    "bootstrap": 10000,
+    "seed": 20260916
+  },
+  "completion": {
+    "status": "complete",
+    "completed_at": "2026-09-16T13:39:55+0000",
+    "datasets": [
+      "brspeech",
+      "bvcc",
+      "singmos",
+      "tmhintqi"
+    ],
+    "outer_folds": 20,
+    "max_shapley_efficiency_error": 1.3322676295501878e-15,
+    "errors_file_exists": false,
+    "audit": "audit.json"
+  },
+  "audit": {
+    "complete_item_coverage_every_method_budget": true,
+    "one_outer_fold_per_system": true,
+    "selection_row_count": 800,
+    "expected_selection_row_count": 800,
+    "max_shapley_efficiency_error": 1.3322676295501878e-15,
+    "max_solver_prediction_difference": 0.0032733110647509,
+    "max_solver_prediction_difference_rmse": 8.696962192624652e-05,
+    "errors_file_exists": false
+  },
+  "sensitivity": {
+    "created_at": "2026-09-17T12:34:34-0300",
+    "source": "review_evidence\\system_disjoint_selection_equal_system",
+    "bootstrap": 10000,
+    "seed_first_scenario": 20260917,
+    "scenarios": [
+      "all_primary",
+      "exclude_brspeechmos",
+      "exclude_k1",
+      "exclude_brspeechmos_k_ge_2",
+      "leave_out_brspeech",
+      "leave_out_bvcc",
+      "leave_out_singmos",
+      "leave_out_tmhintqi"
+    ],
+    "max_primary_point_difference": 1.3183898417423734e-16,
+    "note": "Reanalysis of saved outer-system errors; no model or encoder was refit."
+  }
+}

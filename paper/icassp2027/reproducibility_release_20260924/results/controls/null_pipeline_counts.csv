@@ -1,0 +1,9 @@
+dataset,variant,observed_nzero,observed_count,null_nzero_mean,null_nzero_max,null_count_mean,null_count_max,null_conv_rate,n_null,note
+brspeech,eigclip,6,5,0.0,0,0.0,0,1.0,5,"eigenvalue clipping: pairwise corr within .05 mean/.26 max, one marginal MSE off by <=.57; ftol=1e-12+PG fallback, conv 1.00"
+bvcc,eigclip,4,4,0.0,0,0.0,0,1.0,5,"eigenvalue clipping: pairwise corr within .05 mean/.26 max, one marginal MSE off by <=.57; ftol=1e-12+PG fallback, conv 1.00"
+singmos,eigclip,3,3,0.0,0,0.0,0,1.0,5,"eigenvalue clipping: pairwise corr within .05 mean/.26 max, one marginal MSE off by <=.57; ftol=1e-12+PG fallback, conv 1.00"
+tmhintqi,eigclip,4,4,0.0,0,0.0,0,1.0,5,"eigenvalue clipping: pairwise corr within .05 mean/.26 max, one marginal MSE off by <=.57; ftol=1e-12+PG fallback, conv 1.00"
+brspeech,higham,6,5,0.0,0,0.0,0,1.0,5,"Higham nearest-correlation: marginal MSEs within .15, corr within .10 mean/.53 max; ftol=1e-12+PG fallback, conv 1.00"
+bvcc,higham,4,4,0.0,0,0.0,0,1.0,5,"Higham nearest-correlation: marginal MSEs within .15, corr within .10 mean/.53 max; ftol=1e-12+PG fallback, conv 1.00"
+singmos,higham,3,3,0.0,0,0.0,0,1.0,5,"Higham nearest-correlation: marginal MSEs within .15, corr within .10 mean/.53 max; ftol=1e-12+PG fallback, conv 1.00"
+tmhintqi,higham,4,4,0.0,0,0.0,0,1.0,5,"Higham nearest-correlation: marginal MSEs within .15, corr within .10 mean/.53 max; ftol=1e-12+PG fallback, conv 1.00"

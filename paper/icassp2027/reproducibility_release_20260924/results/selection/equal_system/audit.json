@@ -1,0 +1,10 @@
+{
+  "complete_item_coverage_every_method_budget": true,
+  "one_outer_fold_per_system": true,
+  "selection_row_count": 800,
+  "expected_selection_row_count": 800,
+  "max_shapley_efficiency_error": 1.3322676295501878e-15,
+  "max_solver_prediction_difference": 0.0032733110647509,
+  "max_solver_prediction_difference_rmse": 8.696962192624652e-05,
+  "errors_file_exists": false
+}

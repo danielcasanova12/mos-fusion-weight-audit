@@ -1,0 +1,18 @@
+\begin{table*}[!t]
+\caption{All 16 exploratory equal-system MSE contrasts at $\alpha=10$: effect [95\% test-system-bootstrap interval], followed by Holm-adjusted $p$. Each column is candidate/reference; $\Delta=\mathrm{MSE}_{\rm reference}-\mathrm{MSE}_{\rm candidate}$, so positive is improvement. Models are fixed during test resampling. Values below .0005 in magnitude are displayed as $\approx0$; full precision is in the artifact.}
+\label{tab:planned}
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabular}{lcccc}
+\toprule
+Corpus & Full/Basic & (Basic+CED)/Basic & (Core+CED)/Core & (Core+BEATs)/Core \\
+\midrule
+BRS & \shortstack{.028 [.002,.052]\\(0.281)} & \shortstack{$\approx 0$ [$\approx 0$,$\approx 0$]\\(1.000)} & \shortstack{.038 [.009,.072]\\(0.281)} & \shortstack{$\approx 0$ [$\approx 0$,$\approx 0$]\\(0.250)} \\
+BVCC & \shortstack{.103 [.071,.137]\\($<.001$)} & \shortstack{.072 [.046,.100]\\($<.001$)} & \shortstack{.058 [.036,.082]\\($<.001$)} & \shortstack{.058 [.038,.079]\\($<.001$)} \\
+Sing & \shortstack{.055 [.017,.096]\\(0.041)} & \shortstack{.047 [.021,.075]\\(0.010)} & \shortstack{.066 [.038,.095]\\($<.001$)} & \shortstack{.042 [.018,.067]\\(0.010)} \\
+TM & \shortstack{.097 [.076,.119]\\($<.001$)} & \shortstack{.045 [.027,.064]\\($<.001$)} & \shortstack{.033 [.019,.048]\\($<.001$)} & \shortstack{.046 [.032,.060]\\($<.001$)} \\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -1,0 +1,17 @@
+dataset,rule,sum,min,n_negative,n_nan
+brspeech,simplex,1.0,0.0,0,0
+brspeech,uniform,1.0,0.1,0,0
+brspeech,nnls,1.2736755028711204,0.0,0,0
+brspeech,ridge,0.5438258971002021,-0.16689894987485832,3,0
+bvcc,simplex,1.0,0.0,0,0
+bvcc,uniform,1.0,0.1,0,0
+bvcc,nnls,1.0926773875302132,0.0,0,0
+bvcc,ridge,1.0008756474057883,-0.114733113448781,2,0
+singmos,simplex,1.0,4.211818390662805e-18,0,0
+singmos,uniform,1.0,0.1,0,0
+singmos,nnls,1.10704370198716,0.0,0,0
+singmos,ridge,0.9453512365386615,-0.15634063789698535,1,0
+tmhintqi,simplex,1.0,0.0,0,0
+tmhintqi,uniform,1.0,0.1,0,0
+tmhintqi,nnls,1.1097845386495562,0.0,0,0
+tmhintqi,ridge,0.7396984995225524,-0.27363296209966503,2,0

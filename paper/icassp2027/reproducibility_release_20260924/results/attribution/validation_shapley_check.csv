@@ -1,0 +1,5 @@
+dataset,zero_pos_val,zero_pos_test,val_zero_pos_features,test_zero_pos_features
+brspeech,5,5,"beats,auditory_erb,speaker,rmvpe_quant,ced","beats,auditory_erb,speaker,rmvpe_cont,ced"
+bvcc,4,4,"auditory_erb,rmvpe_cont,rmvpe_quant,egemaps","auditory_erb,rmvpe_cont,rmvpe_quant,egemaps"
+singmos,3,3,"auditory_erb,rmvpe_cont,rmvpe_quant","auditory_erb,rmvpe_cont,rmvpe_quant"
+tmhintqi,4,4,"auditory_erb,rmvpe_cont,rmvpe_quant,egemaps","auditory_erb,rmvpe_cont,rmvpe_quant,egemaps"

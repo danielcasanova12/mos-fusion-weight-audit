@@ -1,0 +1,43 @@
+artifact_version: v1.1-corrected-equal-system
+reference_manuscript: manuscript/submitted_manuscript.pdf
+primary_protocol:
+  expert: ridge
+  alpha: 10.0
+  intercept: unpenalized
+  transforms: training_fold_only
+  fusion: nonnegative_simplex
+  fusion_input: grouped_OOF_predictions
+  players: 10
+  coalition_masks: [1, 1023]
+  nonempty_coalitions_per_corpus: 1023
+  value_function: negative_equal_system_MSE
+  attribution: exact_loss_based_Shapley
+  winsorization: eGeMAPSv02_foldwise_0.1_99.9_percentiles
+selection:
+  outer: 5_group_folds_by_system_id
+  inner: 4_group_folds_within_outer_development
+  methods: [gate, singleton, shapley, exhaustive]
+  budgets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  primary_budgets: [1, 2, 3, 5]
+  inner_objective: equal_system_MSE
+  outer_objective: equal_system_MSE
+  outer_evaluation: one_frozen_evaluation_on_held_systems
+  bootstrap_replicates: 10000
+  multiplicity: Holm_across_five_prespecified_macro_contrasts
+uncertainty:
+  resampling_unit: system_id
+  confidence_level: 0.95
+  training_gate_refits: 100
+  complete_game_Shapley_refits: 50
+solver:
+  optimizer: SLSQP
+  initialization: uniform_simplex
+  bounds: [0, 1]
+  equality_constraint: sum_weights_equals_1
+  ftol: 1.0e-12
+  maxiter: 1000
+  fallback: deterministic_projected_gradient
+notes:
+  - The authoritative selector results are in results/selection/equal_system/.
+  - The earlier utterance-weighted run is not part of this release.
+  - Cached expert predictions and raw audio are not redistributed.

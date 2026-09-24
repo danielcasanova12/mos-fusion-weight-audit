@@ -1,0 +1,25 @@
+{
+  "status": "verified",
+  "protocol": "common_alpha_10_final_foldwise_egemaps_winsor_0p1pct",
+  "scope": "saved held-out empirical game; no model refitting",
+  "datasets": [
+    "brspeech",
+    "bvcc",
+    "singmos",
+    "tmhintqi"
+  ],
+  "scenarios": [
+    "original_10",
+    "rmvpe_grouped_9",
+    "prosody_grouped_8",
+    "remove_rmvpe_quant_9",
+    "remove_egemaps_9",
+    "remove_quant_and_egemaps_8"
+  ],
+  "max_efficiency_error": 3.3306690738754696e-16,
+  "outputs": [
+    "player_partition_group_shapley.csv",
+    "player_partition_owen.csv",
+    "player_partition_summary.csv"
+  ]
+}

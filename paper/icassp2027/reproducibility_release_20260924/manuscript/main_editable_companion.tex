@@ -1,0 +1,618 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{spconf,amsmath,graphicx,xcolor,hyperref}
+\hypersetup{hidelinks,hypertexnames=false}
+\usepackage{titlesec}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{balance}
+
+
+\ninept
+
+% \titleformat{\section}[block]
+%   {\centering\normalsize\bfseries}
+%   {\thesection.}
+%   {1em}
+%   {\MakeUppercase}
+
+% \titlespacing*{\section}
+%   {0pt}
+%   {0.9ex}
+%   {0.45ex}
+\newcommand{\shap}{\ensuremath{\phi}}
+
+\title{DO SIMPLEX FUSION WEIGHTS MEASURE REPRESENTATION UTILITY?\\
+MOS ATTRIBUTION AND SYSTEM-DISJOINT SELECTION}
+
+\name{\shortstack{Daniel Casanova$^{1,3}$ \quad Alef Iury Ferreira$^{1,2}$ \quad
+Lucas Gris$^{1,2}$ \\
+Pedro Lustosa Rege Botelho$^{1}$ \quad Fernanda Silva$^{1}$ \quad
+Frederico Oliveira$^{1,2}$ \\
+Arlindo Galvão Filho$^{1,2}$ \quad Anderson da Silva Soares$^{1,2}$}}
+
+\address{\shortstack{
+$^1$ AKCIT, Brazil \\
+$^2$ Federal University of Goiás (UFG), Brazil \\
+$^3$ Federal University of Technology -- Paraná (UTFPR), Brazil}}
+
+\begin{document}
+\ninept
+\maketitle
+
+
+\begin{abstract}
+MOS predictors increasingly combine pretrained speech representations, but fusion weights describe allocation under a model constraint, not necessarily predictive utility. We analyze ten frozen ridge experts on four benchmarks with a non-negative simplex gate, exact Shapley attribution over all coalitions, and nested system-disjoint fixed-budget selection. Under simplex fusion, 16/40 corpus--representation pairs had near-zero full-gate weight and positive validation Shapley utility; 15/16 remained positive on test after the discovery list was frozen. An exploratory positive-NNLS audit found positive test Shapley values in 8/9 zero-weight cases across BVCC, SingMOS, and TMHINT-QI, but 0/4 for BRSpeechMOS, where NNLS overfit. In held-system selection, Shapley showed no multiplicity-adjusted advantage over exhaustive or singleton selection. Excluding BRSpeechMOS reversed the Shapley--exhaustive point estimate from $-2.15\%$ to $+0.63\%$. Thus, the primary allocation--utility finding is specific to simplex fusion, and compact systems require direct system-disjoint validation.
+\end{abstract}
+
+
+
+\begin{keywords}
+mean opinion score, speech quality, representation analysis, Shapley value,
+self-supervised learning
+\end{keywords}
+
+\section{Introduction}
+\label{sec:intro}
+
+Subjective listening tests remain the reference standard for assessing
+synthetic and processed speech, but they are costly and difficult to scale.
+Non-intrusive Mean Opinion Score (MOS) prediction offers an automatic
+alternative by learning to reproduce human quality ratings. Early systems such
+as MOSNet used task-specific convolutional and recurrent architectures and
+reported substantially stronger correlations at the system level than at the
+utterance level~\cite{lo2019mosnet}. More recent systems use pretrained
+self-supervised speech representations, which improved performance on
+benchmarks such as VCC2018~\cite{tseng2021sslmos}.
+
+Current MOS predictors increasingly combine several representations. Prior work
+has fused multiple encoders from the wav2vec, HuBERT, and WavLM families and
+reported improvements over individual predictors, including under
+out-of-domain conditions~\cite{yang2022fusion}. Other systems supplement
+acoustic representations with pitch, duration, TTS-encoder states, linguistic
+tags, or text embeddings~\cite{vioni2023contentaware}. These results establish
+that heterogeneous representations can be complementary. They do not,
+however, establish that the magnitude of a learned fusion coefficient measures
+the general importance of its representation. The coefficient depends on
+scaling, regularization, correlation, model constraints, and the alternatives
+available in the mixture. In a different setting, Jain and Wallace likewise
+caution that attention weights alone need not explain model predictions
+\cite{jain2019attention}.
+
+Generalization is a second challenge. Strong results within one benchmark do
+not necessarily transfer to unseen synthesis systems or assessment conditions
+\cite{cooper2022generalization,huang2022voicemos}. This distinction also affects
+experimental design. A random utterance-level split may place samples from the
+same synthesis system in both training and evaluation, measuring interpolation
+within known systems rather than transfer to a new one. When the intended claim
+concerns unseen systems, the evaluation must preserve system identity across
+the split~\cite{roberts2017crossvalidation}.
+
+The interpretation of a fused model and the selection of a compact model are
+therefore related but different problems. A gate weight measures allocation in
+the complete mixture. Singleton loss measures an expert in isolation, whereas
+leave-one-out loss measures its necessity after every other expert is present.
+Shapley utility instead averages the expert's marginal contribution across
+coalitions~\cite{shapley1953value,covert2020sage}. These measures can disagree
+when representations encode correlated or redundant information
+\cite{kumar2020shapley}. A representation may receive little weight in the
+complete mixture while remaining useful when a stronger substitute is absent.
+This issue is especially relevant here because each player represents a
+complete checkpoint, pooling rule, preprocessing path, and linear readout
+rather than an isolated scalar feature. Moreover, Shapley utility is
+exponential in the number of players and does not directly optimize any
+fixed-size subset.
+
+In this paper, we study ten frozen representation pipelines on BRSpeechMOS,
+BVCC, SingMOS, and TMHINT-QI, with a non-negative simplex gate over linear
+ridge experts as the primary fusion model. We ask whether a representation can
+receive near-zero weight in that full gate while retaining predictive utility
+in other coalitions, and whether coalition-based attribution can identify
+compact subsets that generalize to unseen systems. We answer the first question
+with the complete ten-player simplex lattice, supplemented by an exploratory
+positive-NNLS sensitivity, and the second through nested system-disjoint
+selection with equal-system MSE.
+
+
+Our aim is not to introduce Shapley attribution as a new measure of representation importance. Rather, we use it to examine whether three notions that are often treated as interchangeable actually agree: allocation in the full mixture, average contribution across alternative coalitions, and the value of a representation for selecting a compact model that generalizes to unseen systems. The primary coalition analysis uses simplex fusion; the NNLS analysis is a secondary, test-set sensitivity. The nested system-disjoint benchmark evaluates selection separately. This separation allows us to test whether contextual contribution, although informative about redundancy and substitutability, is also useful for prospective representation selection.
+
+The contributions of this work are as follows:
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parsep}{0pt}
+  \setlength{\topsep}{2pt}
+  \item We introduce a validation-frozen audit for the simplex fusion of
+  frozen linear experts, separating full-mixture allocation from
+  coalition-averaged predictive utility.
+  \item Under primary simplex fusion, we identify 16 of 40
+  corpus--representation pairs with near-zero full-gate weight but positive
+  point-estimate Shapley utility, and test sensitivity to refits and player
+  definitions; a separate NNLS analysis is exploratory.
+  \item We compare gate, singleton, Shapley, and exhaustive selection in a
+  nested held-system benchmark. Exact Shapley attribution diagnoses contextual
+  redundancy but provides no multiplicity-adjusted selection advantage over the
+  ten-score singleton baseline.
+\end{itemize}
+
+\section{Methods}
+\label{sec:methods}
+
+Our experimental framework has two stages. We first perform a complete-coalition
+audit to compare full-model allocation with contextual utility. We then test
+fixed-budget selection using nested system-disjoint cross-validation.
+
+\noindent\textbf{Data and representations.}
+We evaluate BRSpeechMOS~\cite{oliveira2023representations}, BVCC~\cite{huang2022voicemos}, SingMOS~\cite{tang2024singmos}, and TMHINT-QI~\cite{chen2022inqss} independently using their official train/validation/test partitions. In corpus order, these partitions contain 1{,}942/242/243, 4{,}974/1{,}066/1{,}066, 2{,}000/544/645, and 11{,}644/1{,}293/1{,}978 utterances; the training partitions contain 6, 175, 31, and 98 systems. Audio is loaded with torchaudio, downmixed by channel averaging, and resampled with \nolinkurl{torchaudio.functional.resample} to 16~kHz. System identity defines every grouped fold.
+
+The ten frozen inputs are \nolinkurl{openai/whisper-large-v3} (last hidden state, 1,280-D),
+\nolinkurl{lengyue233/content-vec-best} (layer 12, 768-D),
+\nolinkurl{microsoft/wavlm-base-plus} (layer 12, 768-D),
+\nolinkurl{Bencr/beats-checkpoints/BEATs_iter3_plus_AS2M.pt} (final hidden state, 768-D),
+\nolinkurl{mispeech/ced-small} (final encoder state, 384-D),
+\nolinkurl{speechbrain/spkrec-ecapa-voxceleb} (192-D, $\ell_2$-normalized),
+a 64-band ERB frontend, continuous and quantized RMVPE, and eGeMAPSv02
+\cite{radford2023whisper,qian2022contentvec,chen2022wavlm,chen2023beats,desplanques2020ecapa,wei2023rmvpe,dinkel2024ced,eyben2016egemaps}.
+Encoder frame sequences are mean-pooled; Whisper extraction uses the last
+hidden layer with padding cropping enabled. ERB uses a power STFT (512-point
+FFT, 400-sample Hann window, 160-sample hop), triangular filters from
+50--8{,}000~Hz, $\log(1+x)$ compression, and temporal averaging. RMVPE uses
+the \nolinkurl{weights/rmvpe.pt} checkpoint from RVC-Boss/RMVPE, with a
+160-sample hop at 16~kHz and unvoiced threshold 0.03 (unvoiced frames have
+$F_0=0$); continuous features are
+voiced-$F_0$ mean, population standard deviation, minimum, maximum, and voiced
+fraction. Quantized RMVPE is a normalized 256-bin utterance histogram (bin 0
+unvoiced; 255 mel-spaced voiced bins spanning 50--1{,}100~Hz). eGeMAPSv02
+comprises 88 openSMILE functionals. MOS labels do not adapt the encoders.
+Checkpoint family identifiers and layers were recorded, but hub revisions,
+weight-file hashes, and the torchaudio/openSMILE package versions were not;
+bit-identical re-extraction is therefore not claimed.
+
+Each representation $j$ feeds the same ridge probe ($\alpha=10$, unpenalized intercept; scikit-learn LSQR solver, tolerance $10^{-10}$, maximum 10{,}000 iterations). Feature means and standard deviations are estimated within each training fold and reused unchanged on its scoring fold; dimensions with standard deviation below $10^{-6}$ use scale one. eGeMAPS is additionally clipped at training-fold 0.1/99.9 percentiles. This fold-wise preprocessing prevents information from the scoring systems entering feature construction.
+
+
+\noindent\textbf{Coalition audit.}
+We use sequential least-squares quadratic programming (SLSQP) to combine the
+experts with a non-negative simplex gate:
+\begin{equation}
+\hat y_S(x)
+=
+\sum_{j\in S} w_j^{(S)} f_j(x),
+\qquad
+w_j^{(S)}\geq 0,
+\qquad
+\sum_{j\in S} w_j^{(S)}=1 .
+\label{eq:simplex}
+\end{equation}
+
+Here, $S$ is the active coalition and $f_j(x)$ is expert $j$; experts retain
+their unpenalized intercepts, and the fusion has no additional intercept.
+Five system-grouped folds produce cross-fitted expert predictions, with all
+preprocessing and ridge fitting restricted to each fold's training systems.
+For every non-empty $S\subseteq N$, where $N$ contains the ten pipelines,
+expert predictions remain fixed and only the simplex gate is fitted. Gate
+weights therefore measure allocation within a fitted mixture.
+
+We minimize training-OOF MSE with SLSQP, an analytic gradient, uniform
+initialization, bounds $[0,1]$, the sum-to-one constraint, tolerance
+$\texttt{ftol}=10^{-12}$, and at most 1{,}000 iterations. If SLSQP reports
+failure, a deterministic projected-gradient fallback runs for 4{,}000 steps
+from the uniform point with step size $0.2/\max(\|P\|_2^2,1)$, then projects
+onto the simplex and renormalizes the weights. The same
+solver is used for equal-system gates after scaling each system's rows by
+$1/\sqrt{n_g}$. Saved gate vectors are finite and simplex-feasible, but
+per-coalition optimizer status and fallback use were not retained; we therefore
+do not report an all-coalition convergence rate.
+
+We define $v(S)=-\mathcal{L}(S)$; the empty coalition predicts the MOS mean
+estimated on the corresponding training partition and applied unchanged to the
+scoring split. Higher utility thus means lower error. The audit uses
+utterance-level MSE. Validation labels identify the audit cases, which are
+frozen before test evaluation. Official-test labels only score frozen
+predictors and compute post-hoc attribution quantities; they do not fit
+experts, gates, preprocessing, coalition models, or selection rules.
+
+The exact Shapley utility~\cite{shapley1953value} is
+\begin{equation}
+\phi_j
+=
+\sum_{S\subseteq N\setminus\{j\}}
+\frac{|S|!\,(|N|-|S|-1)!}{|N|!}
+\left[
+v(S\cup\{j\})-v(S)
+\right].
+\label{eq:shapley}
+\end{equation}
+
+All $2^{10}-1=1{,}023$ non-empty coalitions are evaluated exactly. The gate is
+fitted on cross-fitted training predictions and then frozen on the scoring
+split. Leave-one-out utility measures the loss change after removing one
+expert from the full coalition; Shapley utility measures contextual predictive
+contribution, not causal effect. We define a gate as numerically zero when
+$w_j<10^{-6}$.
+
+As an exploratory fusion-rule sensitivity, we also recomputed the 1{,}023
+coalition values for uniform averaging, positive NNLS with an intercept and no
+sum-to-one constraint, and ridge stacking selected by grouped cross-validation
+over 17 log-spaced $\alpha$ values from $10^{-4}$ to $10^4$. These analyses
+reuse the frozen ridge experts and use test utterance-MSE; unlike the primary
+validation-discovery audit, they are descriptive test-set comparisons without
+bootstrap intervals.
+
+Sensitivity analyses vary this threshold from $10^{-8}$ to $10^{-3}$, resample
+training systems for 100 gate refits and 50 complete-game refits, and alter the
+player definition by merging, grouping, or removing overlapping prosodic
+pipelines. A quadratic assignment procedure (QAP) with 100{,}000 node-label
+permutations relates prediction correlation to pairwise Shapley interaction;
+accuracy-matched Gaussian and full-refit controls test whether prediction
+geometry reproduces the pattern~\cite{grabisch1999interaction,krackhardt1988qap}.
+These analyses are exploratory robustness diagnostics.
+
+\noindent\textbf{System-disjoint selection.}
+We evaluate subset selection separately on each corpus's training partition
+using nested system-disjoint cross-validation. Each corpus has five outer
+GroupKFold folds by training-system identifier; the deterministic partition is
+not shuffled or repeated. Within each outer fold, all preprocessing, ridge fitting, fusion
+calibration, attribution, and selection use only outer-development systems;
+four grouped inner folds select subsets for $k\in\{1,2,3,5\}$.
+
+We compare four rules. \emph{Gate}, \emph{singleton}, and \emph{Shapley} rank
+representations by full-gate weight, individual predictive performance, and
+exact inner-loop Shapley utility, respectively. \emph{Exhaustive} directly
+selects the size-$k$ subset with the lowest inner loss. After selection,
+preprocessing and candidate experts are refit on all outer-development systems;
+the selected subset and calibrated gate are then frozen and evaluated once on
+outer-held systems.
+
+Both inner selection and outer evaluation use equal-system MSE,
+
+
+\begin{equation}
+\mathcal{L}_{\mathrm{sys}}
+=
+\frac{1}{|\mathcal{G}|}
+\sum_{g\in\mathcal{G}}
+\frac{1}{n_g}
+\sum_{i:g_i=g}
+(y_i-\hat y_i)^2 ,
+\label{eq:systemmse}
+\end{equation}
+where $\mathcal{G}$ is the set of held systems, $n_g$ is the number of
+utterances from system $g$, and $g_i$ identifies utterance $i$'s system. Each
+system therefore contributes equally. Pairwise contrasts use 10{,}000 paired
+bootstrap replicates that resample outer-held systems while preserving pairing
+across methods and budgets. Holm's procedure corrects five pre-specified
+contrasts: each ranking rule versus exhaustive search, gate versus singleton,
+and Shapley versus singleton~\cite{holm1979procedure}.
+The nested bootstrap uses seed 20260916; sensitivity reaggregations use
+20260917 plus a scenario index. The primary attribution protocol and its
+all-cell test bootstrap use seeds 20260910 and 20260909, respectively. The
+validation-discovery confirmation of the frozen 16 cases uses 10{,}000 test-
+system resamples, with seed $20260916+1000d+j$, where $d$ is the zero-based
+corpus index in the order above and $j$ is the zero-based representation
+index. Training-system refit draws use seed $20260919+1009d+104729r$ for
+zero-based corpus index $d$ and replicate $r$; matched-null controls use seed
+20260912. The QAP uses 100{,}000 label
+permutations per corpus, seeded by
+$20270910+\sum_c\mathrm{ord}(c)$ over the lowercase corpus identifier. The
+separate SLSQP multistart audit uses seed 20260915 (offset by corpus index).
+Because the grouped folds are deterministic, bootstrap replicates quantify
+system-resampling uncertainty conditional on one fold assignment; they are not
+repeated group splits.
+The recorded environment was Python 3.10.12, NumPy 2.2.6, SciPy 1.15.3,
+pandas 2.3.3, scikit-learn 1.7.2, and PyTorch 2.5.1+cu118; all reported
+analyses ran CPU-only.
+
+% Here, $\mathcal{G}$ is the set of systems, $n_g$ is the number of utterances
+% from system $g$, $g_i$ is the system associated with utterance $i$, and
+% $\hat y_i$ is the final fused prediction. Thus, each system contributes one
+% equally weighted MSE regardless of its number of utterances.
+
+
+
+
+
+\section{Results and Discussion}
+\label{sec:results}
+
+\textbf{Selection performance on unseen systems.}
+We first compare the four selection rules on outer-held systems. The nested
+benchmark uses equal-system MSE for both inner selection and outer evaluation.
+Table~\ref{tab:selection_macro} reports the macro contrasts, and
+Fig.~\ref{fig:selection} reports the corpus--budget cells. Negative values
+indicate lower held-system error than the exhaustive inner-development
+reference. Shapley has the lowest point estimate ($-2.15\%$, 95\% CI
+$[-3.77,0.71]\%$), followed by gate ($-1.51\%$, $[-2.82,0.74]\%$) and
+singleton ($-0.72\%$, $[-2.91,1.44]\%$). No selector showed
+multiplicity-adjusted evidence of a difference. Percentages are normalized by
+the full-model held-system MSE, and macro values average the 16
+ corpus--budget cells.
+
+Because BRSpeechMOS contributes only six training systems, we reaggregated the
+saved held-system results after excluding it (three corpora and 12
+corpus--budget cells; no models were refit).
+Relative to exhaustive selection, the deltas were $+0.76\%$
+[$+0.04,+1.54$] for gate ($p_{\mathrm{Holm}}=.156$), $+0.78\%$
+[$+0.14,+1.46$] for singleton ($p_{\mathrm{Holm}}=.094$), and $+0.63\%$
+[$-0.02,+1.30$] for Shapley ($p_{\mathrm{Holm}}=.172$); brackets are
+unadjusted 95\% paired system-bootstrap CIs. Thus, excluding BRSpeechMOS
+reverses the all-corpus point estimates, including Shapley's change from
+$-2.15\%$ to $+0.63\%$. No contrast survives Holm correction in the
+all-corpus or BRSpeechMOS-excluded comparison. The inferential conclusion is
+unchanged, but the point-estimate
+ranking is sensitive to the small BRSpeechMOS corpus; we therefore do not
+interpret the all-corpus ranking as corpus-robust.
+
+We also performed leave-one-corpus-out macro reaggregation of the same
+outer-held errors (not model refitting or cross-corpus transfer). Shapley
+versus exhaustive deltas were $-3.49\%$ [$-5.57,+0.29$] without BVCC,
+$-2.93\%$ [$-5.05,+0.85$] without SingMOS, and $-2.79\%$
+[$-4.94,+0.99$] without TMHINT-QI; corresponding within-scenario Holm
+$p$-values were $.494$, $.706$, and $.673$; none of these Shapley--exhaustive
+contrasts survived correction. The displayed leave-one-corpus-out intervals
+are unadjusted 95\% paired system-bootstrap CIs; Holm correction is within
+each omission scenario and does not adjust across the four scenarios.
+One exploratory Shapley--singleton contrast was significant only when omitting
+SingMOS ($-1.82\%$, 95\% CI $[-4.18,-0.14]\%$,
+$p_{\mathrm{Holm}}=.049$ within that scenario); it was not corrected across
+the four leave-one-corpus-out scenarios and is not treated as confirmatory.
+
+\begin{table}[t]
+\centering
+% \caption{Macro held-system comparison with exhaustive inner-development
+% selection as the reference. Equal-system MSE is used for both inner selection
+% and outer evaluation. Values are averaged over the four corpora and primary
+% budgets $k\in\{1,2,3,5\}$; negative values indicate lower held-system MSE than
+% the reference. Intervals are paired 95\% system-bootstrap intervals, and
+% $p$-values are Holm-adjusted. The score column counts coalition evaluations,
+% not runtime or encoder cost. Percentages are normalized by the full-model
+% held-system MSE; the macro average covers 16 corpus--budget cells.}
+\caption{Macro held-system comparison with exhaustive inner-development
+selection as reference. Values average four corpora and
+$k\in\{1,2,3,5\}$; negative values indicate lower held-system MSE.
+Intervals are paired 95\% system-bootstrap CIs and $p$-values are
+Holm-adjusted. Scores count coalition evaluations, and percentages are
+relative to full-model held-system MSE.}
+
+\label{tab:selection_macro}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lrrc}
+\toprule
+Selector & \shortstack{Ranking/coalition\\scores} & $\Delta$MSE [95\% CI] & $p_{\mathrm{Holm}}$ \\
+\midrule
+Gate      & 1       & $-1.51$ [$-2.82,+0.74$]   & $.694$ \\
+Singleton & 10      & $-0.72$ [$-2.91,+1.44$]   & $1.000$ \\
+Shapley   & 1{,}023 & $-2.15$ [$-3.77,+0.71$]   & $.694$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.97\textwidth]{fig_selection_story.pdf}
+\caption{Held-system equal-system MSE change by corpus and subset budget,
+relative to exhaustive inner-development selection. Values are normalized by
+full-model MSE (negative is better); asterisks mark cellwise 95\% system-
+bootstrap intervals excluding zero, without multiplicity adjustment. Macro
+intervals and Holm-adjusted contrasts are in Table~\ref{tab:selection_macro}.}
+\label{fig:selection}
+\end{figure*}
+
+% Across the five prespecified contrasts, no multiplicity-adjusted comparison
+% showed evidence of a difference. The Shapley--singleton contrast favored
+% Shapley by $1.43\%$ at the point estimate, with a 95\% CI of
+% $[-3.23,-0.07]\%$, but its raw $p=.0296$ became
+% $p_{\mathrm{Holm}}=.148$. This result does not establish equivalence between
+% the selectors.
+
+The Shapley-minus-singleton contrast was $-1.43\%$ (95\% CI
+$[-3.23,-0.07]\%$; raw $p=.0296$), but it was not significant after Holm
+correction ($p_{\mathrm{Holm}}=.148$). This absence of adjusted significance
+does not establish equivalence: no equivalence margin or equivalence test was
+pre-specified.
+
+The selectors also retained different subsets. At $k=1$, singleton and
+exhaustive search coincide by construction, and all selectors retain CED on
+BVCC in every outer fold. At $k=5$ on TMHINT-QI, all rules retain WavLM and
+BEATs; CED is retained in three to five folds depending on the selector. On
+BRSpeechMOS at $k=5$, eGeMAPS is selected in all five outer folds by gate,
+singleton, Shapley, and exhaustive selection. SingMOS reverses direction
+between $k=3$ and $k=5$. Similar held-system errors can therefore arise from
+different subsets.
+
+Singleton ranking measures standalone predictive quality, whereas Shapley
+averages marginal gains across coalitions of different sizes. Deployment
+evaluates a particular fixed-budget subset. A representation can contribute
+when a stronger alternative is absent while remaining unnecessary in the
+selected subset. Exact Shapley estimation required 1{,}023 coalition scores,
+compared with ten representation-specific scores for singleton ranking. These
+counts measure scoring requirements rather than encoder latency or energy;
+broader attribution did not yield a detectable held-system selection gain in
+this experiment.
+
+\textbf{Simplex-fusion allocation does not determine contextual utility.}
+
+In the primary non-negative simplex audit, we compare full-gate allocation with contextual utility. Using the
+operational threshold $w_j<10^{-6}$, the validation-discovery audit
+identified 16 of 40 corpus--representation pairs with numerically zero
+full-gate weight and positive point-estimate Shapley utility
+(Fig.~\ref{fig:attribution}). The count remained 16 as the threshold varied
+from $10^{-8}$ to $10^{-3}$, although exact equality to zero remains
+solver-tolerance dependent. On the frozen test evaluation, 15/16 cases
+remained positive at the point estimate, 11/16 had an unadjusted
+system-bootstrap interval with a lower bound above zero, and 8/16 were
+positive in all 50 training-system refits. Five effects were below 2\% of
+full-model MSE, whereas BRSpeechMOS Speaker/CED and BVCC/TMHINT-QI eGeMAPS
+exceeded 17\%. BRSpeechMOS estimates remain exploratory because its training
+partition contains only six systems.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.97\textwidth]{fig_attribution_utility.pdf}
+\caption{Full-gate weight and test Shapley utility for all 40
+corpus--representation pairs (a), and test-system 95\% bootstrap intervals
+for the 16 cases frozen by validation (b). Crosses mark those cases; near-zero
+weights are display-jittered. Colors identify the four corpora, and filled
+markers have a positive interval lower bound.}
+\label{fig:attribution}
+\end{figure*}
+
+All 16 discordant cases had absolute leave-one-out utility below
+$1.1\times10^{-7}$ MSE. Removing the corresponding representation after all
+other experts were present therefore had negligible effect. Positive Shapley
+utility indicates a positive average marginal gain across coalition contexts,
+including contexts in which some competing representations are absent. The
+result is consistent with contextual substitutability: a representation may
+add predictive information when some competitors are absent while receiving
+no allocation in the complete ten-representation mixture. This does not imply
+that the representation should be retained for deployment.
+
+The result also limits what can be inferred from a zero simplex-gate
+coefficient. Full-gate allocation, leave-one-out loss, and Shapley utility
+measure different properties of the same predictive resources. A zero
+coefficient is therefore insufficient evidence that a representation is
+globally irrelevant. Positive Shapley utility likewise does not establish
+unique information or causal acoustic content. Mean pooling, linear ridge
+experts, and simplex fusion constrain the primary result; whether the same
+allocation--utility mismatch holds for nonlinear fusion remains untested.
+
+To test sensitivity to the simplex constraint, we examined the exploratory
+positive-NNLS games. In this rule the fitted positive coefficients do not sum
+to one (the observed corpus totals ranged from 1.09 to 1.27). Among non-simplex
+NNLS gates with zero full-model coefficients, test Shapley utility was positive
+in 8/9 cases across BVCC,
+SingMOS, and TMHINT-QI, but in 0/4 cases for BRSpeechMOS. NNLS test MSE on
+BRSpeechMOS was .904, versus .704 for simplex fusion, consistent with severe
+overfitting on its six training systems. Because this check uses test-set
+point estimates without validation-frozen discovery or uncertainty intervals,
+it is suggestive rather than confirmatory. It supports a limited sensitivity
+claim beyond the simplex constraint, not a general claim about arbitrary or
+nonlinear fusion. Ridge stacking did not yield exact-zero bottom-ranked
+coefficients in most corpora, and the MLP check did not compute coalition
+Shapley values.
+
+\textbf{Sensitivity to the player definition and prediction geometry.}
+Finally, we test whether the finding depends on the player definition or on
+prediction geometry. The original game contained 16 discordant cases. Across alternative player
+definitions, the count ranged from 7 to 13 cases, while the qualitative
+ranking remained stable (Table~\ref{tab:player_sensitivity}). Grouped-Shapley
+rank correlations ranged from $0.976$ to $1.000$, while Owen-value rank
+correlations were approximately $1.000$, with sign agreement from $0.889$ to
+$1.000$.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Sensitivity of the zero-gate/positive-Shapley rate to the player
+definition. Entries report discordant cases divided by eligible
+corpus--player pairs. Grouped $F_0$ merges continuous and quantized RMVPE;
+grouped prosody merges both RMVPE views with eGeMAPS. Removal rows delete the
+indicated players. Rates are descriptive diagnostics, not population
+frequencies.}
+\label{tab:player_sensitivity}
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabular}{lrrr}
+\toprule
+Player definition & Players & Cases/eligible & Rate \\
+\midrule
+Original                & 10 & $16/40$ & $40.0\%$ \\
+Grouped $F_0$ views     & 9  & $13/36$ & $36.1\%$ \\
+Grouped prosody         & 8  & $9/32$  & $28.1\%$ \\
+Without quantized $F_0$ & 9  & $13/36$ & $36.1\%$ \\
+Without eGeMAPS         & 9  & $10/36$ & $27.8\%$ \\
+Without both            & 8  & $7/32$  & $21.9\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+QAP analysis associated prediction correlation with Shapley interaction
+strength. Across corpora, the correlation--interaction associations were
+$\rho=.368/.943/.443/.957$, with raw
+$p=.0069/<10^{-5}/.124/<10^{-5}$. After Holm correction across the four
+exploratory tests, the adjusted $p$-values were $.014$, $<.001$, $.124$, and
+$<.001$, respectively. Accuracy-matched Gaussian controls yielded
+approximately $.30/.96/.80/.89$, indicating that correlated prediction
+geometry can reproduce part of the observed interaction pattern without
+establishing shared acoustic semantics.
+
+Gate support was less stable than the contextual rankings. Across 100
+system-level refits, the four corpora produced 51, 4, 17, and 14 distinct gate
+supports, respectively. Full-refit controls produced no discordant cases in 40
+diagnostic games. Given the limited null controls, the result is qualitative:
+the allocation--utility mismatch persisted across the audited player
+definitions, but its count depended on modeling choices.
+
+For a separate numerical check of the complete ten-player gates, we fit each
+corpus from a uniform start and 100 symmetric Dirichlet starts
+($\mathrm{Dirichlet}(1,\ldots,1)$; seed 20260915). All 101/101 SLSQP runs per
+corpus reported success and recovered the same support; the largest loss
+difference from the uniform-start solution was $1.05\times10^{-12}$. This
+multi-start audit covers the four full gates, not every coalition fit.
+
+\balance
+\textbf{Scope and limitations.}
+The outer benchmark measures transfer to previously unseen systems within each
+corpus, not to unseen corpora. Leave-one-corpus-out results reaggregate the same
+held-system errors; they are not models trained on three corpora and tested on
+the fourth. The nested benchmark uses one deterministic outer/inner GroupKFold
+assignment; its system bootstrap does not measure split-to-split variation, and
+we did not pre-specify an equivalence margin or run an equivalence test. The
+primary attribution claim is limited to ten frozen linear ridge experts under
+a global non-negative simplex gate. Positive NNLS gives an exploratory
+test-set sensitivity in three corpora, but not in six-system BRSpeechMOS;
+we did not compute a coalition-Shapley audit for nonlinear MLP fusion. Both
+inner selection and outer evaluation use equal-system MSE. Finally, checkpoint
+hub revisions, weight hashes, and the torchaudio/openSMILE package versions
+were not archived, precluding bit-identical embedding re-extraction.
+
+Within global simplex fusion, the results distinguish allocation, contextual
+contribution, and deployment value. Exact Shapley analysis identified
+contextual utility not visible in full-model weights, but this attribution
+did not yield a statistically detectable selection advantage over singleton
+ranking on held-out systems. The alternative-fusion NNLS result remains an
+exploratory, test-set sensitivity rather than a second confirmatory finding.
+For deployment-oriented selection, system-disjoint outer evaluation remains
+the relevant criterion, while coalition analysis serves as a diagnostic of
+substitutability and representation interaction.
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+In this paper, we separated full-mixture allocation, contextual utility, and
+fixed-budget deployment value for frozen ridge experts under global simplex
+fusion. In the primary audit, 16 of 40 corpus--representation pairs had
+full-gate weight below $10^{-6}$ but positive point-estimate Shapley utility;
+an exploratory positive-NNLS reanalysis showed the pattern in 8/9 zero-weight
+cases across BVCC, SingMOS, and TMHINT-QI, but in 0/4 BRSpeechMOS cases. Exact
+Shapley ranking provided no multiplicity-adjusted held-system selection
+advantage. Its macro point estimate changed from $-2.15\%$ to $+0.63\%$ when
+BRSpeechMOS was excluded, so the ranking is not corpus-robust. These results do
+not establish equivalence between selectors or generalize to nonlinear fusion.
+
+These findings distinguish allocation from contextual contribution under
+global simplex fusion, but Shapley utility did not replace direct evaluation
+of fixed-budget subsets. Selection should be tested under the intended system
+shift; repeated group splits and pre-specified equivalence tests are important
+next steps. Broader work should also test nonlinear fusion, exact checkpoint
+revisions, and selection budgets defined by latency, memory, or robustness.
+\section{Acknowledgments}
+
+This work has been partially funded by the project Research and
+Development of Algorithms for Construction of Digital Human Technological
+Components supported by Advanced Knowledge Center in Immersive Technologies
+(AKCIT), with financial resources from the PPI IoT of the MCTI grant number
+057/2023, signed with EMBRAPII.
+
+\textit{Generative AI use disclosure:} OpenAI ChatGPT was used only for
+language editing, including improvements to grammar, clarity, concision, and
+phrasing. The authors take full responsibility for the manuscript.
+
+
+
+\bibliographystyle{IEEEbib}
+\bibliography{refs}
+
+
+
+\end{document}

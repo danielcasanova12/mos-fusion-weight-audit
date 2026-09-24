@@ -1,0 +1,14 @@
+{
+  "status": "complete",
+  "completed_at": "2026-09-16T13:39:55+0000",
+  "datasets": [
+    "brspeech",
+    "bvcc",
+    "singmos",
+    "tmhintqi"
+  ],
+  "outer_folds": 20,
+  "max_shapley_efficiency_error": 1.3322676295501878e-15,
+  "errors_file_exists": false,
+  "audit": "audit.json"
+}

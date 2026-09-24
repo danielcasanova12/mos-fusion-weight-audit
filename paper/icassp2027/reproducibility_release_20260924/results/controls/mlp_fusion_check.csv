@@ -1,0 +1,5 @@
+dataset,mlp_full_mse,n_mlp_loo_positive,mlp_loo_details
+brspeech,0.7187201596524004,5,whisper:-0.01443;contentvec12:+0.02734;wavlm:-0.00231;beats:+0.02959;auditory_erb:+0.02968;speaker:+0.01732;rmvpe_cont:-0.02315;rmvpe_quant:+0.03279;ced:-0.00179;egemaps:-0.01793
+bvcc,0.21609191581210602,6,whisper:+0.00002;contentvec12:-0.00160;wavlm:-0.00034;beats:+0.00337;auditory_erb:-0.00726;speaker:-0.00469;rmvpe_cont:+0.00427;rmvpe_quant:+0.00022;ced:+0.00339;egemaps:+0.00229
+singmos,0.33952071263174943,7,whisper:-0.00019;contentvec12:+0.00859;wavlm:+0.00072;beats:+0.00753;auditory_erb:+0.01315;speaker:-0.00518;rmvpe_cont:-0.00171;rmvpe_quant:+0.00525;ced:+0.00756;egemaps:+0.02004
+tmhintqi,0.33400482946425164,10,whisper:+0.01119;contentvec12:+0.00368;wavlm:+0.00698;beats:+0.00841;auditory_erb:+0.00042;speaker:+0.00042;rmvpe_cont:+0.00152;rmvpe_quant:+0.00238;ced:+0.00787;egemaps:+0.00141

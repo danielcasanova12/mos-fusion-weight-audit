@@ -1,0 +1,23 @@
+nohup: ignoring input
+[2026-09-16 13:34:58] auditing CPU LSQR parity against saved final expert predictions
+[2026-09-16 13:35:15] complete brspeech outer fold 0 in 5.6s
+[2026-09-16 13:35:21] complete brspeech outer fold 1 in 6.2s
+[2026-09-16 13:35:27] complete brspeech outer fold 2 in 6.1s
+[2026-09-16 13:35:34] complete brspeech outer fold 3 in 6.6s
+[2026-09-16 13:35:40] complete brspeech outer fold 4 in 6.3s
+[2026-09-16 13:35:52] complete bvcc outer fold 0 in 11.9s
+[2026-09-16 13:36:04] complete bvcc outer fold 1 in 11.8s
+[2026-09-16 13:36:16] complete bvcc outer fold 2 in 11.4s
+[2026-09-16 13:36:28] complete bvcc outer fold 3 in 12.0s
+[2026-09-16 13:36:39] complete bvcc outer fold 4 in 11.8s
+[2026-09-16 13:36:46] complete singmos outer fold 0 in 6.5s
+[2026-09-16 13:36:52] complete singmos outer fold 1 in 6.4s
+[2026-09-16 13:36:59] complete singmos outer fold 2 in 6.3s
+[2026-09-16 13:37:05] complete singmos outer fold 3 in 6.3s
+[2026-09-16 13:37:11] complete singmos outer fold 4 in 6.3s
+[2026-09-16 13:37:42] complete tmhintqi outer fold 0 in 30.8s
+[2026-09-16 13:38:13] complete tmhintqi outer fold 1 in 30.7s
+[2026-09-16 13:38:43] complete tmhintqi outer fold 2 in 29.6s
+[2026-09-16 13:39:14] complete tmhintqi outer fold 3 in 31.2s
+[2026-09-16 13:39:45] complete tmhintqi outer fold 4 in 30.8s
+[2026-09-16 13:39:55] all nested system-disjoint selection experiments complete

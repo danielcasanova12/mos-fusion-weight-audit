@@ -1,0 +1,5 @@
+dataset,n_unseen,note,zero_pos_unseen,zero_gates,unseen_pos_features
+brspeech,0,no unseen systems,,,
+bvcc,234,,4.0,4.0,"auditory_erb,rmvpe_cont,rmvpe_quant,egemaps"
+singmos,145,,2.0,3.0,"auditory_erb,rmvpe_cont"
+tmhintqi,0,no unseen systems,,,
